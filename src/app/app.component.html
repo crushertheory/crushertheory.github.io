@@ -1,0 +1,73 @@
+<div class="body">
+  <div class="opponent-screen" *ngIf="opponentSelect === false">
+    <ng-container>
+      <img class="opponent-image" src="../assets/opponents/opponent1.png" alt="" (click)="opponent1Selected()">
+      <img class="opponent-image" src="../assets/opponents/opponent2.png" alt="" (click)="opponent2Selected()">
+      <img class="opponent-image" src="../assets/opponents/opponent3.png" alt="" (click)="opponent3Selected()">
+    </ng-container>
+  </div>
+  <div class="upper-frame" *ngIf="opponentSelect === true">
+    <div *ngIf="videoTime">
+      <div>
+        <video class="video" muted autoplay src="{{ currentVideo }}" type="video/mp4"></video>
+        <!-- <button (click)="dismissVideoFrame()">Dismiss Video</button> -->
+      </div>
+    </div>
+  </div>
+  <div class="bottom-frame" *ngIf="opponentSelect === true">
+    <h3>Player</h3>
+
+    <div
+      style="display: inline-block; padding: 2px"
+      *ngFor="let card of playerCards"
+    >
+      <img class="card" src="{{ card.image }}" alt="" />
+    </div>
+    <div>{{ playerPoints }}</div>
+    <div *ngIf="hitMeAvailable" style="display: inline-block">
+      <button class="button" [disabled]="playerStayed" (click)="hitMe()">
+        HIT ME
+      </button>
+      <button class="button" [disabled]="playerStayed" (click)="playerStays()">
+        STAY?
+      </button>
+      <button class="button" [disabled]="!playerStayed" (click)="nextHand()">
+        NEXT HAND
+      </button>
+      <button
+        [disabled]="playerCards.length !== 2 && playerStayed"
+        (click)="doubleDown()"
+        class="button"
+      >
+        DOUBLE DOWN
+      </button>
+    </div>
+
+    <h3>Computer</h3>
+    <div
+      style="display: inline-block; padding: 2px"
+      *ngFor="let card of computerCards; let i = index"
+    >
+      <img
+        *ngIf="i === 0 && hideInitialCard"
+        class="card"
+        src="../assets/cards/card back black.png"
+        alt=""
+      />
+      <img
+        *ngIf="i === 0 && !hideInitialCard"
+        class="card"
+        src="{{ computerCards[0].image }}"
+        alt=""
+      />
+      <img *ngIf="i !== 0" class="card" src="{{ card.image }}" alt="" />
+    </div>
+    <div *ngIf="!hideInitialCard">{{ computerPoints }}</div>
+    <h3 *ngIf="blackJack">BLACKJACK!!!!</h3>
+    <h3 *ngIf="busted">BUSTED :(</h3>
+    <h3 *ngIf="playerWins">You win :)</h3>
+    <h3 *ngIf="computerWins">You lose :(</h3>
+    <h3 *ngIf="draw">DRAW</h3>
+    <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
+  </div>
+</div>
