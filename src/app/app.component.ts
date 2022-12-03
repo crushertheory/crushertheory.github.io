@@ -77,6 +77,19 @@ export class AppComponent {
     "../assets/3-12.mp4",
     "../assets/3-13.mp4",
   ];
+  public videos4 = [
+    '../assets/4-0.mp4',
+    '../assets/4-1.mp4',
+    '../assets/4-2.mp4',
+    "../assets/4-3.mp4",
+    "../assets/4-4.mp4",
+    "../assets/4-5.mp4",
+    "../assets/4-6.mp4", 
+    "../assets/4-7.mp4",
+    "../assets/4-8.mp4",
+    "../assets/4-9.mp4",
+    "../assets/4-10.mp4",
+  ];
   public currentVideo: string | undefined;
   public opponents = ["../assets/opponents/opponent1.png", "../assets/opponents/opponent2.png"]
 
@@ -712,6 +725,48 @@ export class AppComponent {
         this.videoTime = true;
         return (this.currentVideo = this.videos3[13]);
       }
+    }
+    else if (this.opponent === 4) {
+      if (this.playerWinCount === 3) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[1]);
+      }
+      if (this.playerWinCount === 6) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[2]);
+      }
+      if (this.playerWinCount === 9) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[3]);
+      }
+      if (this.playerWinCount === 12) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[4]);
+      }
+      if (this.playerWinCount === 15) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[5]);
+      }
+      if (this.playerWinCount === 18) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[6]);
+      }
+      if (this.playerWinCount === 21) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[7]);
+      }
+      if (this.playerWinCount === 24) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[8]);
+      }
+      if (this.playerWinCount === 27) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[9]);
+      }
+      if (this.playerWinCount === 30) {
+        this.videoTime = true;
+        return (this.currentVideo = this.videos4[10]);
+      }
     } 
      return 0
   }
@@ -735,5 +790,12 @@ export class AppComponent {
     this.opponent = 3
     this.videoTime = true
     this.currentVideo = this.videos3[0]
+  }
+
+  opponent4Selected() {
+    this.opponentSelect = true
+    this.opponent = 4
+    this.videoTime = true
+    this.currentVideo = this.videos4[0]
   }
 }
