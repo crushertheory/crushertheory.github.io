@@ -8,13 +8,13 @@
   </div>
   <div class="upper-frame" *ngIf="opponentSelect === true">
     <div *ngIf="videoTime">
-      <div>
+      <div class="center-screen">
         <video class="video" muted autoplay src="{{ currentVideo }}" type="video/mp4"></video>
         <!-- <button (click)="dismissVideoFrame()">Dismiss Video</button> -->
       </div>
     </div>
   </div>
-  <div class="bottom-frame" *ngIf="opponentSelect === true">
+  <div class="lower-frame" *ngIf="opponentSelect === true">
     <h3>Player</h3>
 
     <div

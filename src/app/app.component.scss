@@ -1,5 +1,5 @@
 .card {
-    height: 100px;
+    height: 300px;
 }
 
 .button {
@@ -8,6 +8,7 @@
 
 .upper-frame {
     height: 65%;
+    background-color: black;
 }
 
 .lower-frame {
@@ -25,26 +26,39 @@
 }
 
 .video-overlay {
-    height: 100vh
+    height: 100vh;
+    position: fixed;
+    left: 50%;
 }
 
 .upper-frame-image {
-    height: inherit
+    height: inherit;
 }
 
 .body {
-    height: 100vh
+    height: 2400px;
+    width: 1080px;
+    background-color: antiquewhite;
 }
 
 .video {
-    max-height: 650px;
+    max-height: 1800px;
+    margin-top: 100px;
 }
 
 .opponent-screen {
-    height: 100vh;
+    height: inherit;
     background-color: greenyellow;
 }
 
 .opponent-image {
     max-height: 300px;
 }
+
+.center-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+  }
