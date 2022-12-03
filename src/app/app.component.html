@@ -1,7 +1,9 @@
 <div class="body">
   <div class="opponent-screen" *ngIf="opponentSelect === false">
     <ng-container>
+      <div class="opponent-padding">
       <img class="opponent-image" src="../assets/opponents/opponent1.png" alt="" (click)="opponent1Selected()">
+      </div>
       <img class="opponent-image" src="../assets/opponents/opponent2.png" alt="" (click)="opponent2Selected()">
       <img class="opponent-image" src="../assets/opponents/opponent3.png" alt="" (click)="opponent3Selected()">
       <img class="opponent-image" src="../assets/opponents/opponent4.png" alt="" (click)="opponent4Selected()">
