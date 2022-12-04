@@ -4,11 +4,13 @@
 
 .button {
     width: 125px;
+    height: 125px;
 }
 
 .upper-frame {
     height: 65%;
     background-color: black;
+    padding: 20px;
 }
 
 .lower-frame {
@@ -42,8 +44,8 @@
 }
 
 .video {
-    max-height: 1800px;
-    margin-top: 100px;
+    max-height: 2000px;
+    margin-top: 150px;
 }
 
 .opponent-screen {
