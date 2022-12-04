@@ -29,6 +29,82 @@ export class AppComponent {
   public playerWinCount: number = 0;
   public videoTime: boolean = false;
   public opponent: number = 0
+  public allVideos = [
+    {
+      video0: '../assets/0.mp4',
+      video1: '../assets/1.mp4',
+      video2: '../assets/2.mp4',
+      video3: "../assets/3.mp4",
+      video4: "../assets/4.mp4",
+      video5: "../assets/5.mp4",
+      video6: "../assets/6.mp4", 
+      video7: "../assets/7.mp4",
+      video8:"../assets/8.mp4",
+      video9: "../assets/9.mp4",
+      video10: "../assets/10.mp4",
+      video11: "../assets/11.mp4",
+      video12: "../assets/12.mp4",
+      video13: "../assets/13.mp4",
+    },
+    {
+      video0: '../assets/1-0.mp4',
+      video1: '../assets/1-1.mp4',
+      video2: '../assets/1-2.mp4',
+      video3: "../assets/1-3.mp4",
+      video4: "../assets/1-4.mp4",
+      video5: "../assets/1-5.mp4",
+      video6: "../assets/1-6.mp4", 
+      video7: "../assets/1-7.mp4",
+      video8:"../assets/1-8.mp4",
+      video9: "../assets/1-9.mp4",
+      video10: "../assets/1-10.mp4",
+      video11: "../assets/1-11.mp4",
+      video12: "../assets/1-12.mp4",
+      video13: "../assets/1-13.mp4",
+    },
+    {
+      video0: '../assets/3-0.mp4',
+      video1: '../assets/3-1.mp4',
+      video2: '../assets/3-2.mp4',
+      video3: "../assets/3-3.mp4",
+      video4: "../assets/3-4.mp4",
+      video5: "../assets/3-5.mp4",
+      video6: "../assets/3-6.mp4", 
+      video7: "../assets/3-7.mp4",
+      video8: "../assets/3-8.mp4",
+      video9: "../assets/3-9.mp4",
+      video10: "../assets/3-10.mp4",
+      video11: "../assets/3-11.mp4",
+      video12: "../assets/3-12.mp4",
+      video13: "../assets/3-13.mp4",
+    },
+    {
+      video0: '../assets/4-0.mp4',
+      video1: '../assets/4-1.mp4',
+      video2: '../assets/4-2.mp4',
+      video3: "../assets/4-3.mp4",
+      video4: "../assets/4-4.mp4",
+      video5: "../assets/4-5.mp4",
+      video6: "../assets/4-6.mp4", 
+      video7: "../assets/4-7.mp4",
+      video8:"../assets/4-8.mp4",
+      video9: "../assets/4-9.mp4",
+      video10: "../assets/4-10.mp4",
+    },
+    {
+      video0: '../assets/5-0.mp4',
+      video1: '../assets/5-1.mp4',
+      video2: '../assets/5-2.mp4',
+      video3: "../assets/5-3.mp4",
+      video4: "../assets/5-4.mp4",
+      video5: "../assets/5-5.mp4",
+      video6: "../assets/5-6.mp4", 
+      video7: "../assets/5-7.mp4",
+      video8:"../assets/5-8.mp4",
+      video9: "../assets/5-9.mp4",
+      video10: "../assets/5-10.mp4",
+    }
+  ]
   public videos = [
     '../assets/0.mp4',
     '../assets/1.mp4',
@@ -90,6 +166,28 @@ export class AppComponent {
     "../assets/4-9.mp4",
     "../assets/4-10.mp4",
   ];
+
+  public videos5 = [
+    '../assets/5-0.mp4',
+    '../assets/5-1.mp4',
+    '../assets/5-2.mp4',
+    "../assets/5-3.mp4",
+    "../assets/5-4.mp4",
+    "../assets/5-5.mp4",
+    "../assets/5-6.mp4", 
+    "../assets/5-7.mp4",
+    "../assets/5-8.mp4",
+    "../assets/5-9.mp4",
+    "../assets/5-10.mp4",
+  ]
+
+  public videosArray = [
+    this.videos,
+    this.videos2,
+    this.videos3,
+    this.videos4,
+    this.videos5
+  ]
   public currentVideo: string | undefined;
   public opponents = ["../assets/opponents/opponent1.png", "../assets/opponents/opponent2.png"]
 
@@ -485,7 +583,7 @@ export class AppComponent {
       if (computerScore < playerScore) {
         this.playerWins = true;
         this.playerWinCount++;
-        this.displayVideo(this.opponent);
+        this.displayVideo(this.playerWinCount);
         return (this.playerCredits = this.playerCredits + pool);
       }
       if (computerScore === playerScore) {
@@ -499,14 +597,14 @@ export class AppComponent {
       if (playerScore < 22 && computerScore > 22) {
         this.playerWins = true;
         this.playerWinCount++;
-        this.displayVideo(this.opponent);
+        this.displayVideo(this.playerWinCount);
         return (this.playerCredits = this.playerCredits + pool);
       }
       if (playerScore > 22 && computerScore < 22) {
         this.computerWins = true;
         return (this.computerCredits = this.computerCredits + pool);
       }
-      if (playerScore > 22 && computerScore > 22) {
+      if (playerScore > 22 && computerScore > 22 && playerScore === computerScore) {
         this.draw = true;
         return (
           (this.playerCredits = this.playerCredits + halfPool),
@@ -564,211 +662,287 @@ export class AppComponent {
     this.videoTime = false;
   }
 
-  public displayVideo(opponent: number) {
-    if (this.opponent === 1) {
-      if (this.playerWinCount === 3) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[1]);
-      }
-      if (this.playerWinCount === 6) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[2]);
-      }
-      if (this.playerWinCount === 9) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[3]);
-      }
-      if (this.playerWinCount === 12) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[4]);
-      }
-      if (this.playerWinCount === 15) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[5]);
-      }
-      if (this.playerWinCount === 18) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[6]);
-      }
-      if (this.playerWinCount === 21) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[7]);
-      }
-      if (this.playerWinCount === 24) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[8]);
-      }
-      if (this.playerWinCount === 27) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[9]);
-      }
-      if (this.playerWinCount === 30) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[10]);
-      }
-      if (this.playerWinCount === 33) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[11]);
-      }
-      if (this.playerWinCount === 36) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[12]);
-      }
-      if (this.playerWinCount === 39) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos[13]);
-      }
-    } else if (this.opponent === 2) {
-      if (this.playerWinCount === 3) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[1]);
-      }
-      if (this.playerWinCount === 6) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[2]);
-      }
-      if (this.playerWinCount === 9) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[3]);
-      }
-      if (this.playerWinCount === 12) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[4]);
-      }
-      if (this.playerWinCount === 15) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[5]);
-      }
-      if (this.playerWinCount === 18) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[6]);
-      }
-      if (this.playerWinCount === 21) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[7]);
-      }
-      if (this.playerWinCount === 24) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[8]);
-      }
-      if (this.playerWinCount === 27) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[9]);
-      }
-      if (this.playerWinCount === 30) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[10]);
-      }
-      if (this.playerWinCount === 33) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[11]);
-      }
-      if (this.playerWinCount === 36) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[12]);
-      }
-      if (this.playerWinCount === 39) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos2[13]);
-      }
+  // public displayVideo(opponent: number) {
+  //   if (this.opponent === 1) {
+  //     if (this.playerWinCount === 3) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[1]);
+  //     }
+  //     if (this.playerWinCount === 6) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[2]);
+  //     }
+  //     if (this.playerWinCount === 9) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[3]);
+  //     }
+  //     if (this.playerWinCount === 12) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[4]);
+  //     }
+  //     if (this.playerWinCount === 15) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[5]);
+  //     }
+  //     if (this.playerWinCount === 18) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[6]);
+  //     }
+  //     if (this.playerWinCount === 21) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[7]);
+  //     }
+  //     if (this.playerWinCount === 24) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[8]);
+  //     }
+  //     if (this.playerWinCount === 27) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[9]);
+  //     }
+  //     if (this.playerWinCount === 30) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[10]);
+  //     }
+  //     if (this.playerWinCount === 33) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[11]);
+  //     }
+  //     if (this.playerWinCount === 36) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[12]);
+  //     }
+  //     if (this.playerWinCount === 39) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos[13]);
+  //     }
+  //   } else if (this.opponent === 2) {
+  //     if (this.playerWinCount === 3) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[1]);
+  //     }
+  //     if (this.playerWinCount === 6) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[2]);
+  //     }
+  //     if (this.playerWinCount === 9) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[3]);
+  //     }
+  //     if (this.playerWinCount === 12) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[4]);
+  //     }
+  //     if (this.playerWinCount === 15) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[5]);
+  //     }
+  //     if (this.playerWinCount === 18) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[6]);
+  //     }
+  //     if (this.playerWinCount === 21) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[7]);
+  //     }
+  //     if (this.playerWinCount === 24) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[8]);
+  //     }
+  //     if (this.playerWinCount === 27) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[9]);
+  //     }
+  //     if (this.playerWinCount === 30) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[10]);
+  //     }
+  //     if (this.playerWinCount === 33) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[11]);
+  //     }
+  //     if (this.playerWinCount === 36) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[12]);
+  //     }
+  //     if (this.playerWinCount === 39) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos2[13]);
+  //     }
+  //   }
+  //   else if (this.opponent === 3) {
+  //     if (this.playerWinCount === 3) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[1]);
+  //     }
+  //     if (this.playerWinCount === 6) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[2]);
+  //     }
+  //     if (this.playerWinCount === 9) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[3]);
+  //     }
+  //     if (this.playerWinCount === 12) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[4]);
+  //     }
+  //     if (this.playerWinCount === 15) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[5]);
+  //     }
+  //     if (this.playerWinCount === 18) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[6]);
+  //     }
+  //     if (this.playerWinCount === 21) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[7]);
+  //     }
+  //     if (this.playerWinCount === 24) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[8]);
+  //     }
+  //     if (this.playerWinCount === 27) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[9]);
+  //     }
+  //     if (this.playerWinCount === 30) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[10]);
+  //     }
+  //     if (this.playerWinCount === 33) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[11]);
+  //     }
+  //     if (this.playerWinCount === 36) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[12]);
+  //     }
+  //     if (this.playerWinCount === 39) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos3[13]);
+  //     }
+  //   }
+  //   else if (this.opponent === 4) {
+  //     if (this.playerWinCount === 3) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[1]);
+  //     }
+  //     if (this.playerWinCount === 6) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[2]);
+  //     }
+  //     if (this.playerWinCount === 9) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[3]);
+  //     }
+  //     if (this.playerWinCount === 12) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[4]);
+  //     }
+  //     if (this.playerWinCount === 15) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[5]);
+  //     }
+  //     if (this.playerWinCount === 18) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[6]);
+  //     }
+  //     if (this.playerWinCount === 21) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[7]);
+  //     }
+  //     if (this.playerWinCount === 24) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[8]);
+  //     }
+  //     if (this.playerWinCount === 27) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[9]);
+  //     }
+  //     if (this.playerWinCount === 30) {
+  //       this.videoTime = true;
+  //       return (this.currentVideo = this.videos4[10]);
+  //     }
+  //   } 
+  //    return 0
+  // }
+
+  public pickRightVideos(videoArray: any) {
+    switch(videoArray) {
+      case this.opponent === 1:
+        return this.videosArray[0]
+        case this.opponent === 2:
+        return this.videosArray[1]
+        case this.opponent === 3:
+        return this.videosArray[2]
+        case this.opponent === 4:
+        return this.videosArray[5]
+        case this.opponent === 5:
+        return this.videosArray[4]
+        default:
+          return this.videosArray[0]
     }
-    else if (this.opponent === 3) {
-      if (this.playerWinCount === 3) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[1]);
-      }
-      if (this.playerWinCount === 6) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[2]);
-      }
-      if (this.playerWinCount === 9) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[3]);
-      }
-      if (this.playerWinCount === 12) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[4]);
-      }
-      if (this.playerWinCount === 15) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[5]);
-      }
-      if (this.playerWinCount === 18) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[6]);
-      }
-      if (this.playerWinCount === 21) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[7]);
-      }
-      if (this.playerWinCount === 24) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[8]);
-      }
-      if (this.playerWinCount === 27) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[9]);
-      }
-      if (this.playerWinCount === 30) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[10]);
-      }
-      if (this.playerWinCount === 33) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[11]);
-      }
-      if (this.playerWinCount === 36) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[12]);
-      }
-      if (this.playerWinCount === 39) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos3[13]);
-      }
+  }
+  public displayVideo(wins: number) {
+    const videos = this.pickRightVideos(this.videosArray)
+      if (wins === 3) {
+        this.videoTime = true,
+        this.currentVideo = videos[1]
     }
-    else if (this.opponent === 4) {
-      if (this.playerWinCount === 3) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[1]);
-      }
-      if (this.playerWinCount === 6) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[2]);
-      }
-      if (this.playerWinCount === 9) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[3]);
-      }
-      if (this.playerWinCount === 12) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[4]);
-      }
-      if (this.playerWinCount === 15) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[5]);
-      }
-      if (this.playerWinCount === 18) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[6]);
-      }
-      if (this.playerWinCount === 21) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[7]);
-      }
-      if (this.playerWinCount === 24) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[8]);
-      }
-      if (this.playerWinCount === 27) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[9]);
-      }
-      if (this.playerWinCount === 30) {
-        this.videoTime = true;
-        return (this.currentVideo = this.videos4[10]);
-      }
+    if (wins === 6) {
+      this.videoTime = true,
+      this.currentVideo = videos[2]  
+    }
+    if (wins === 9) {
+      this.videoTime = true,
+      this.currentVideo = videos[3]  
     } 
-     return 0
+    if (wins === 12) {
+      this.videoTime = true,
+      this.currentVideo = videos[4]  
+    } 
+    if (wins === 15) {
+      this.videoTime = true,
+      this.currentVideo = videos[5]  
+    } 
+    if (wins === 18) {
+      this.videoTime = true,
+      this.currentVideo = videos[6]  
+    } 
+    if (wins === 21) {
+      this.videoTime = true,
+      this.currentVideo = videos[7]  
+    }   
+    if (wins === 24) {
+      this.videoTime = true,
+      this.currentVideo = videos[8]  
+    }
+    if (wins === 27) {
+      this.videoTime = true,
+      this.currentVideo = videos[9]  
+    } 
+    if (wins === 30) {
+      this.videoTime = true,
+      this.currentVideo = videos[10]  
+    } 
+    if (wins === 33) {
+      this.videoTime = true,
+      this.currentVideo = videos[11]  
+    }
+    if (wins === 36) {
+      this.videoTime = true,
+      this.currentVideo = videos[12]  
+    } 
+    if (wins === 39) {
+      this.videoTime = true,
+      this.currentVideo = videos[13]  
+    } 
+    if (wins === 42) {
+      this.videoTime = true,
+      this.currentVideo = videos[14]  
+    }
   }
 
   opponent1Selected() {
@@ -797,5 +971,12 @@ export class AppComponent {
     this.opponent = 4
     this.videoTime = true
     this.currentVideo = this.videos4[0]
+  }
+
+  opponent5Selected() {
+    this.opponentSelect = true
+    this.opponent = 5
+    this.videoTime = true
+    this.currentVideo = this.videos5[0]
   }
 }
