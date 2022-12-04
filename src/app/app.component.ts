@@ -170,7 +170,6 @@ export class AppComponent {
   public videos5 = [
     '../assets/5-0.mp4',
     '../assets/5-1.mp4',
-    '../assets/5-2.mp4',
     "../assets/5-3.mp4",
     "../assets/5-4.mp4",
     "../assets/5-5.mp4",
@@ -594,17 +593,17 @@ export class AppComponent {
         );
       }
     } else {
-      if (playerScore < 22 && computerScore > 22) {
+      if (playerScore < 22 && computerScore >= 22) {
         this.playerWins = true;
         this.playerWinCount++;
         this.displayVideo();
         return (this.playerCredits = this.playerCredits + pool);
       }
-      if (playerScore > 22 && computerScore < 22) {
+      if (playerScore >= 22 && computerScore < 22) {
         this.computerWins = true;
         return (this.computerCredits = this.computerCredits + pool);
       }
-      if (playerScore > 22 && computerScore > 22 && playerScore === computerScore) {
+      if (playerScore >= 22 && computerScore >= 22 && playerScore === computerScore) {
         this.draw = true;
         return (
           (this.playerCredits = this.playerCredits + halfPool),
