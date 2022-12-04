@@ -520,7 +520,7 @@ export class AppComponent {
     this.removeCardsFromDeck(cardNumber);
 
     const cardValue = receivedCard.value;
-    if (cardValue === 11 && cardValue + this.playerPoints > 21) {
+    if (cardValue === 11 && (cardValue + this.playerPoints) > 21) {
       receivedCard.value = 1;
       this.playerPoints = this.playerPoints - 10;
     }
@@ -534,15 +534,14 @@ export class AppComponent {
           this.playerPoints = this.playerPoints - 10;
         }
       });
-
-      if (this.playerPoints > 21) {
-        this.busted = true;
-        this.computeWinner(
-          this.computerPoints,
-          this.playerPoints,
-          this.bettingPool
-        );
-      }
+    }
+    if (this.playerPoints > 21) {
+      this.busted = true;
+      this.computeWinner(
+        this.computerPoints,
+        this.playerPoints,
+        this.bettingPool
+      );
     }
   }
 
