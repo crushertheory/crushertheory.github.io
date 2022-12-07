@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { CardsComponent } from './cards/cards.component';
+import { OpponentVideosComponent } from './opponent-videos/opponent-videos.component';
 
 @Component({
   selector: 'app-root',
@@ -6,6 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  constructor(public allCards: CardsComponent, public opponentVideos: OpponentVideosComponent) {}
   opponentSelect: boolean = false
   title = 'black-jack';
   deckCards: any[] = [];
@@ -29,395 +32,10 @@ export class AppComponent {
   public playerWinCount: number = 0;
   public videoTime: boolean = false;
   public opponent: number = 0
-  
-  public videos1 = [
-    '../assets/0.mp4',
-    '../assets/1.mp4',
-    '../assets/2.mp4',
-    "../assets/3.mp4",
-    "../assets/4.mp4",
-    "../assets/5.mp4",
-    "../assets/6.mp4", 
-    "../assets/7.mp4",
-    "../assets/8.mp4",
-    "../assets/9.mp4",
-    "../assets/10.mp4",
-    "../assets/11.mp4",
-    "../assets/12.mp4",
-    "../assets/13.mp4",
-  ];
-  public videos2 = [
-    '../assets/1-0.mp4',
-    '../assets/1-1.mp4',
-    '../assets/1-2.mp4',
-    "../assets/1-3.mp4",
-    "../assets/1-4.mp4",
-    "../assets/1-5.mp4",
-    "../assets/1-6.mp4", 
-    "../assets/1-7.mp4",
-    "../assets/1-8.mp4",
-    "../assets/1-9.mp4",
-    "../assets/1-10.mp4",
-    "../assets/1-11.mp4",
-    "../assets/1-12.mp4",
-    "../assets/1-13.mp4",
-  ];
-  public videos3 = [
-    '../assets/3-0.mp4',
-    '../assets/3-1.mp4',
-    '../assets/3-2.mp4',
-    "../assets/3-3.mp4",
-    "../assets/3-4.mp4",
-    "../assets/3-5.mp4",
-    "../assets/3-6.mp4", 
-    "../assets/3-7.mp4",
-    "../assets/3-8.mp4",
-    "../assets/3-9.mp4",
-    "../assets/3-10.mp4",
-    "../assets/3-11.mp4",
-    "../assets/3-12.mp4",
-    "../assets/3-13.mp4",
-  ];
-  public videos4 = [
-    '../assets/4-0.mp4',
-    '../assets/4-1.mp4',
-    '../assets/4-2.mp4',
-    "../assets/4-3.mp4",
-    "../assets/4-4.mp4",
-    "../assets/4-5.mp4",
-    "../assets/4-6.mp4", 
-    "../assets/4-7.mp4",
-    "../assets/4-8.mp4",
-    "../assets/4-9.mp4",
-    "../assets/4-10.mp4",
-  ];
 
-  public videos5 = [
-    '../assets/5-0.mp4',
-    '../assets/5-1.mp4',
-    "../assets/5-3.mp4",
-    "../assets/5-4.mp4",
-    "../assets/5-5.mp4",
-    "../assets/5-6.mp4", 
-    "../assets/5-7.mp4",
-    "../assets/5-8.mp4",
-    "../assets/5-9.mp4",
-    "../assets/5-10.mp4",
-  ]
-
-  public videos6 = [
-    '../assets/6-0.mp4',
-    '../assets/6-1.mp4',
-    "../assets/6-3.mp4",
-    "../assets/6-4.mp4",
-    "../assets/6-5.mp4",
-    "../assets/6-6.mp4", 
-    "../assets/6-7.mp4",
-    "../assets/6-8.mp4",
-    "../assets/6-9.mp4",
-  ]
-  public videos7 = [
-    '../assets/7-0.mp4',
-    '../assets/7-1.mp4',
-    '../assets/7-2.mp4',
-    "../assets/7-3.mp4",
-    "../assets/7-4.mp4",
-    "../assets/7-5.mp4",
-    "../assets/7-6.mp4", 
-    "../assets/7-7.mp4",
-    "../assets/7-8.mp4",
-    "../assets/7-9.mp4",
-    "../assets/7-10.mp4",
-    "../assets/7-11.mp4",
-    "../assets/7-12.mp4",
-    "../assets/7-13.mp4",
-  ];
-
-  public videos8 = [
-    '../assets/8-0.mp4',
-    '../assets/8-1.mp4',
-    '../assets/8-2.mp4',
-    "../assets/8-3.mp4",
-    "../assets/8-4.mp4",
-    "../assets/8-5.mp4",
-    "../assets/8-6.mp4", 
-    "../assets/8-7.mp4",
-    "../assets/8-8.mp4",
-    "../assets/8-9.mp4",
-  ];
-
-  public videosArray = [
-    this.videos1,
-    this.videos2,
-    this.videos3,
-    this.videos4,
-    this.videos5
-  ]
   public currentVideo: string | undefined;
-  public opponents = ["../assets/opponents/opponent1.png", "../assets/opponents/opponent2.png"]
 
-  allCards = [
-    {
-      label: '2he',
-      value: 2,
-      image: '../assets/cards/2_of_hearts.png',
-    },
-    {
-      label: '3he',
-      value: 3,
-      image: '../assets/cards/3_of_hearts.png',
-    },
-    {
-      label: '4he',
-      value: 4,
-      image: '../assets/cards/4_of_hearts.png',
-    },
-    {
-      label: '5he',
-      value: 5,
-      image: '../assets/cards/5_of_hearts.png',
-    },
-    {
-      label: '6he',
-      value: 6,
-      image: '../assets/cards/6_of_hearts.png',
-    },
-    {
-      label: '7he',
-      value: 7,
-      image: '../assets/cards/7_of_hearts.png',
-    },
-    {
-      label: '8he',
-      value: 8,
-      image: '../assets/cards/8_of_hearts.png',
-    },
-    {
-      label: '9he',
-      value: 9,
-      image: '../assets/cards/9_of_hearts.png',
-    },
-    {
-      label: '10he',
-      value: 10,
-      image: '../assets/cards/10_of_hearts.png',
-    },
-    {
-      label: 'Jhe',
-      value: 10,
-      image: '../assets/cards/jack_of_hearts.png',
-    },
-    {
-      label: 'Qhe',
-      value: 10,
-      image: '../assets/cards/queen_of_hearts.png',
-    },
-    {
-      label: 'Khe',
-      value: 10,
-      image: '../assets/cards/king_of_hearts.png',
-    },
-    {
-      label: 'Ahe',
-      value: 11,
-      image: '../assets/cards/ace_of_hearts.png',
-    },
-    {
-      label: '2cl',
-      value: 2,
-      image: '../assets/cards/2_of_clubs.png',
-    },
-    {
-      label: '3cl',
-      value: 3,
-      image: '../assets/cards/3_of_clubs.png',
-    },
-    {
-      label: '4cl',
-      value: 4,
-      image: '../assets/cards/4_of_clubs.png',
-    },
-    {
-      label: '5cl',
-      value: 5,
-      image: '../assets/cards/5_of_clubs.png',
-    },
-    {
-      label: '6cl',
-      value: 6,
-      image: '../assets/cards/6_of_clubs.png',
-    },
-    {
-      label: '7cl',
-      value: 7,
-      image: '../assets/cards/7_of_clubs.png',
-    },
-    {
-      label: '8cl',
-      value: 8,
-      image: '../assets/cards/8_of_clubs.png',
-    },
-    {
-      label: '9cl',
-      value: 9,
-      image: '../assets/cards/9_of_clubs.png',
-    },
-    {
-      label: '10cl',
-      value: 10,
-      image: '../assets/cards/10_of_clubs.png',
-    },
-    {
-      label: 'Jcl',
-      value: 10,
-      image: '../assets/cards/jack_of_clubs.png',
-    },
-    {
-      label: 'Qcl',
-      value: 10,
-      image: '../assets/cards/queen_of_clubs.png',
-    },
-    {
-      label: 'Kcl',
-      value: 10,
-      image: '../assets/cards/king_of_clubs.png',
-    },
-    {
-      label: 'Acl',
-      value: 11,
-      image: '../assets/cards/ace_of_clubs.png',
-    },
-    {
-      label: '2di',
-      value: 2,
-      image: '../assets/cards/2_of_diamonds.png',
-    },
-    {
-      label: '3di',
-      value: 3,
-      image: '../assets/cards/3_of_diamonds.png',
-    },
-    {
-      label: '4di',
-      value: 4,
-      image: '../assets/cards/4_of_diamonds.png',
-    },
-    {
-      label: '5di',
-      value: 5,
-      image: '../assets/cards/5_of_diamonds.png',
-    },
-    {
-      label: '6di',
-      value: 6,
-      image: '../assets/cards/6_of_diamonds.png',
-    },
-    {
-      label: '7di',
-      value: 7,
-      image: '../assets/cards/7_of_diamonds.png',
-    },
-    {
-      label: '8di',
-      value: 8,
-      image: '../assets/cards/8_of_diamonds.png',
-    },
-    {
-      label: '9di',
-      value: 9,
-      image: '../assets/cards/9_of_diamonds.png',
-    },
-    {
-      label: '10di',
-      value: 10,
-      image: '../assets/cards/10_of_diamonds.png',
-    },
-    {
-      label: 'Jdi',
-      value: 10,
-      image: '../assets/cards/jack_of_diamonds.png',
-    },
-    {
-      label: 'Qdi',
-      value: 10,
-      image: '../assets/cards/queen_of_diamonds.png',
-    },
-    {
-      label: 'Kdi',
-      value: 10,
-      image: '../assets/cards/king_of_diamonds.png',
-    },
-    {
-      label: 'Adi',
-      value: 11,
-      image: '../assets/cards/ace_of_diamonds.png',
-    },
-    {
-      label: '2sp',
-      value: 2,
-      image: '../assets/cards/2_of_spades.png',
-    },
-    {
-      label: '3sp',
-      value: 3,
-      image: '../assets/cards/3_of_spades.png',
-    },
-    {
-      label: '4sp',
-      value: 4,
-      image: '../assets/cards/4_of_spades.png',
-    },
-    {
-      label: '5sp',
-      value: 5,
-      image: '../assets/cards/5_of_spades.png',
-    },
-    {
-      label: '6sp',
-      value: 6,
-      image: '../assets/cards/6_of_spades.png',
-    },
-    {
-      label: '7sp',
-      value: 7,
-      image: '../assets/cards/7_of_spades.png',
-    },
-    {
-      label: '8sp',
-      value: 8,
-      image: '../assets/cards/8_of_spades.png',
-    },
-    {
-      label: '9sp',
-      value: 9,
-      image: '../assets/cards/9_of_spades.png',
-    },
-    {
-      label: '10sp',
-      value: 10,
-      image: '../assets/cards/10_of_spades.png',
-    },
-    {
-      label: 'Jsp',
-      value: 10,
-      image: '../assets/cards/jack_of_spades.png',
-    },
-    {
-      label: 'Qsp',
-      value: 10,
-      image: '../assets/cards/queen_of_spades.png',
-    },
-    {
-      label: 'Ksp',
-      value: 10,
-      image: '../assets/cards/king_of_spades.png',
-    },
-    {
-      label: 'Asp',
-      value: 11,
-      image: '../assets/cards/ace_of_spades.png',
-    },
-  ];
+  public deck = this.allCards.allCards
 
   ngOnInit() {
     this.createDeck();
@@ -435,7 +53,7 @@ export class AppComponent {
 
   public async createDeck() {
     while (this.deckCards.length < 52) {
-      this.deckCards.push(this.allCards[this.getCardNumber()]);
+      this.deckCards.push(this.deck[this.getCardNumber()]);
       this.deckCards = Array.from(new Set(this.deckCards));
     }
     return this.deckCards;
@@ -444,7 +62,7 @@ export class AppComponent {
   public dealToPlayer() {
     while (this.playerCards.length < 2) {
       const cardNumber = this.getCardNumber();
-      this.playerCards.push(this.allCards[cardNumber]);
+      this.playerCards.push(this.deck[cardNumber]);
       this.playerCards = Array.from(new Set(this.playerCards));
       this.removeCardsFromDeck(cardNumber);
     }
@@ -463,7 +81,7 @@ export class AppComponent {
   public dealToComputer() {
     while (this.computerCards.length < 2) {
       const cardNumber = this.getCardNumber();
-      this.computerCards.push(this.allCards[cardNumber]);
+      this.computerCards.push(this.deck[cardNumber]);
       this.removeCardsFromDeck(cardNumber);
     }
     for (const card of this.computerCards) {
@@ -475,7 +93,7 @@ export class AppComponent {
 
   public hitMe() {
     const cardNumber = this.getCardNumber();
-    const receivedCard = this.allCards[cardNumber];
+    const receivedCard = this.deck[cardNumber];
     this.playerCards.push(receivedCard);
     this.removeCardsFromDeck(cardNumber);
 
@@ -510,7 +128,7 @@ export class AppComponent {
     this.hideInitialCard = false;
     while (this.computerPoints <= 16 && !this.busted) {
       const cardNumber = this.getCardNumber();
-      const receivedCard = this.allCards[cardNumber];
+      const receivedCard = this.deck[cardNumber];
       this.computerCards.push(receivedCard);
       if (
         receivedCard.value === 11 &&
@@ -576,7 +194,7 @@ export class AppComponent {
   public doubleDown() {
     this.doubleDownActivated = true;
     const cardNumber = this.getCardNumber();
-    const receivedCard = this.allCards[cardNumber];
+    const receivedCard = this.deck[cardNumber];
     this.playerCards.push(receivedCard);
     this.removeCardsFromDeck(cardNumber);
     this.playerPoints = this.playerPoints + receivedCard.value;
@@ -587,7 +205,7 @@ export class AppComponent {
 
   public removeCardsFromDeck(cardNumber: number) {
     this.deckCards = this.deckCards.filter((x) => {
-      return x !== this.allCards[cardNumber];
+      return x !== this.deck[cardNumber];
     });
   }
 
@@ -610,42 +228,46 @@ export class AppComponent {
     this.bettingPool = this.bettingPool + this.standardBet * 2;
     this.playerStayed = false;
 
-    if (this.deckCards.length < 10) {
+    if (this.deckCards.length < 4) {
       this.deckCards = [];
       this.createDeck();
     }
   }
 
-  public dismissVideoFrame() {
-    this.videoTime = false;
+  public selectOpponentVideos(opponent: number) {
+    let opponentVideoArray: any
+    if (opponent === 1) {
+      opponentVideoArray = this.opponentVideos.videos1
+    }
+    if (opponent === 2) {
+      opponentVideoArray = this.opponentVideos.videos2
+    }
+    if (opponent === 3) {
+      opponentVideoArray = this.opponentVideos.videos3
+    }
+    if (opponent === 4) {
+      opponentVideoArray = this.opponentVideos.videos4
+    }
+    if (opponent === 5) {
+      opponentVideoArray = this.opponentVideos.videos5
+    }
+    if (opponent === 6) {
+      opponentVideoArray = this.opponentVideos.videos6
+    }
+    if (opponent === 7) {
+      opponentVideoArray = this.opponentVideos.videos7
+    }
+    if (opponent === 8) {
+      opponentVideoArray = this.opponentVideos.videos8
+    }
+    if (opponent === 9) {
+      opponentVideoArray = this.opponentVideos.videos9
+    }
+    return opponentVideoArray
   }
 
   public displayVideo() {
-    let opponentVideos: any
-    if (this.opponent === 1) {
-      opponentVideos = this.videos1
-    }
-    if (this.opponent === 2) {
-      opponentVideos = this.videos2
-    }
-    if (this.opponent === 3) {
-      opponentVideos = this.videos3
-    }
-    if (this.opponent === 4) {
-      opponentVideos = this.videos4
-    }
-    if (this.opponent === 5) {
-      opponentVideos = this.videos5
-    }
-    if (this.opponent === 6) {
-      opponentVideos = this.videos6
-    }
-    if (this.opponent === 7) {
-      opponentVideos = this.videos7
-    }
-    if (this.opponent === 8) {
-      opponentVideos = this.videos8
-    }
+    const opponentVideos: any = this.selectOpponentVideos(this.opponent)
     if (this.playerWinCount === 3) {
       this.videoTime = true;
       return (this.currentVideo = opponentVideos[1]);
@@ -700,77 +322,67 @@ export class AppComponent {
     }
   }
 
-  public pickRightVideos(videoArray: any) {
-    switch(videoArray) {
-      case this.opponent === 1:
-        return this.videosArray[0]
-        case this.opponent === 2:
-        return this.videosArray[1]
-        case this.opponent === 3:
-        return this.videosArray[2]
-        case this.opponent === 4:
-        return this.videosArray[5]
-        case this.opponent === 5:
-        return this.videosArray[4]
-        default:
-          return this.videosArray[0]
-    }
-  }
-
   opponent1Selected() {
     this.opponentSelect = true
     this.opponent = 1
     this.videoTime = true
-    this.currentVideo = this.videos1[0]
+    this.currentVideo = this.opponentVideos.videos1[0]
   }
 
   opponent2Selected() {
     this.opponentSelect = true
     this.opponent = 2
     this.videoTime = true
-    this.currentVideo = this.videos2[0]
+    this.currentVideo = this.opponentVideos.videos2[0]
   }
 
   opponent3Selected() {
     this.opponentSelect = true
     this.opponent = 3
     this.videoTime = true
-    this.currentVideo = this.videos3[0]
+    this.currentVideo = this.opponentVideos.videos3[0]
   }
 
   opponent4Selected() {
     this.opponentSelect = true
     this.opponent = 4
     this.videoTime = true
-    this.currentVideo = this.videos4[0]
+    this.currentVideo = this.opponentVideos.videos4[0]
   }
 
   opponent5Selected() {
     this.opponentSelect = true
     this.opponent = 5
     this.videoTime = true
-    this.currentVideo = this.videos5[0]
+    this.currentVideo = this.opponentVideos.videos5[0]
   }
 
   opponent6Selected() {
     this.opponentSelect = true
     this.opponent = 6
     this.videoTime = true
-    this.currentVideo = this.videos6[0]
+    this.currentVideo = this.opponentVideos.videos6[0]
   }
 
   opponent7Selected() {
     this.opponentSelect = true
     this.opponent = 7
     this.videoTime = true
-    this.currentVideo = this.videos7[0]
+    this.currentVideo = this.opponentVideos.videos7[0]
   }
 
   opponent8Selected() {
     this.opponentSelect = true
     this.opponent = 8
     this.videoTime = true
-    this.currentVideo = this.videos8[0]
+    this.currentVideo = this.opponentVideos.videos8[0]
+  }
+
+  opponent9Selected() {
+    this.opponentSelect = true
+    this.opponent = 9
+    this.videoTime = true
+    this.currentVideo = this.opponentVideos.videos9[0]
   }
   
 }

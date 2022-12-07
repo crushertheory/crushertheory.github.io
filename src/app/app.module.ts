@@ -3,20 +3,20 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { Oppenent1Component } from './oppenent1/oppenent1.component';
-import { Oppenent2Component } from './oppenent2/oppenent2.component';
+import { CardsComponent } from './cards/cards.component';
+import { OpponentVideosComponent } from './opponent-videos/opponent-videos.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    Oppenent1Component,
-    Oppenent2Component
+    CardsComponent,
+    OpponentVideosComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [CardsComponent, OpponentVideosComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
