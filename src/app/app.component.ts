@@ -29,82 +29,7 @@ export class AppComponent {
   public playerWinCount: number = 0;
   public videoTime: boolean = false;
   public opponent: number = 0
-  public allVideos = [
-    {
-      video0: '../assets/0.mp4',
-      video1: '../assets/1.mp4',
-      video2: '../assets/2.mp4',
-      video3: "../assets/3.mp4",
-      video4: "../assets/4.mp4",
-      video5: "../assets/5.mp4",
-      video6: "../assets/6.mp4", 
-      video7: "../assets/7.mp4",
-      video8:"../assets/8.mp4",
-      video9: "../assets/9.mp4",
-      video10: "../assets/10.mp4",
-      video11: "../assets/11.mp4",
-      video12: "../assets/12.mp4",
-      video13: "../assets/13.mp4",
-    },
-    {
-      video0: '../assets/1-0.mp4',
-      video1: '../assets/1-1.mp4',
-      video2: '../assets/1-2.mp4',
-      video3: "../assets/1-3.mp4",
-      video4: "../assets/1-4.mp4",
-      video5: "../assets/1-5.mp4",
-      video6: "../assets/1-6.mp4", 
-      video7: "../assets/1-7.mp4",
-      video8:"../assets/1-8.mp4",
-      video9: "../assets/1-9.mp4",
-      video10: "../assets/1-10.mp4",
-      video11: "../assets/1-11.mp4",
-      video12: "../assets/1-12.mp4",
-      video13: "../assets/1-13.mp4",
-    },
-    {
-      video0: '../assets/3-0.mp4',
-      video1: '../assets/3-1.mp4',
-      video2: '../assets/3-2.mp4',
-      video3: "../assets/3-3.mp4",
-      video4: "../assets/3-4.mp4",
-      video5: "../assets/3-5.mp4",
-      video6: "../assets/3-6.mp4", 
-      video7: "../assets/3-7.mp4",
-      video8: "../assets/3-8.mp4",
-      video9: "../assets/3-9.mp4",
-      video10: "../assets/3-10.mp4",
-      video11: "../assets/3-11.mp4",
-      video12: "../assets/3-12.mp4",
-      video13: "../assets/3-13.mp4",
-    },
-    {
-      video0: '../assets/4-0.mp4',
-      video1: '../assets/4-1.mp4',
-      video2: '../assets/4-2.mp4',
-      video3: "../assets/4-3.mp4",
-      video4: "../assets/4-4.mp4",
-      video5: "../assets/4-5.mp4",
-      video6: "../assets/4-6.mp4", 
-      video7: "../assets/4-7.mp4",
-      video8:"../assets/4-8.mp4",
-      video9: "../assets/4-9.mp4",
-      video10: "../assets/4-10.mp4",
-    },
-    {
-      video0: '../assets/5-0.mp4',
-      video1: '../assets/5-1.mp4',
-      video2: '../assets/5-2.mp4',
-      video3: "../assets/5-3.mp4",
-      video4: "../assets/5-4.mp4",
-      video5: "../assets/5-5.mp4",
-      video6: "../assets/5-6.mp4", 
-      video7: "../assets/5-7.mp4",
-      video8:"../assets/5-8.mp4",
-      video9: "../assets/5-9.mp4",
-      video10: "../assets/5-10.mp4",
-    }
-  ]
+  
   public videos1 = [
     '../assets/0.mp4',
     '../assets/1.mp4',
@@ -206,6 +131,19 @@ export class AppComponent {
     "../assets/7-11.mp4",
     "../assets/7-12.mp4",
     "../assets/7-13.mp4",
+  ];
+
+  public videos8 = [
+    '../assets/8-0.mp4',
+    '../assets/8-1.mp4',
+    '../assets/8-2.mp4',
+    "../assets/8-3.mp4",
+    "../assets/8-4.mp4",
+    "../assets/8-5.mp4",
+    "../assets/8-6.mp4", 
+    "../assets/8-7.mp4",
+    "../assets/8-8.mp4",
+    "../assets/8-9.mp4",
   ];
 
   public videosArray = [
@@ -705,6 +643,9 @@ export class AppComponent {
     if (this.opponent === 7) {
       opponentVideos = this.videos7
     }
+    if (this.opponent === 8) {
+      opponentVideos = this.videos8
+    }
     if (this.playerWinCount === 3) {
       this.videoTime = true;
       return (this.currentVideo = opponentVideos[1]);
@@ -824,4 +765,12 @@ export class AppComponent {
     this.videoTime = true
     this.currentVideo = this.videos7[0]
   }
+
+  opponent8Selected() {
+    this.opponentSelect = true
+    this.opponent = 8
+    this.videoTime = true
+    this.currentVideo = this.videos8[0]
+  }
+  
 }
