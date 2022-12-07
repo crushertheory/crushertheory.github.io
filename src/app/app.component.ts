@@ -71,6 +71,14 @@ export class AppComponent {
       this.playerPoints = card.value + this.playerPoints;
     }
 
+    if (this.playerPoints > 21) {
+      this.playerCards.find((card) => {
+        if (card.value === 11) {
+          this.playerPoints - 10
+        }
+      })
+    }
+
     if (this.playerPoints === 21) {
       this.blackJack = true;
     }
@@ -263,6 +271,9 @@ export class AppComponent {
     if (opponent === 9) {
       opponentVideoArray = this.opponentVideos.videos9
     }
+    if (opponent === 10) {
+      opponentVideoArray = this.opponentVideos.videos10
+    }
     return opponentVideoArray
   }
 
@@ -383,6 +394,13 @@ export class AppComponent {
     this.opponent = 9
     this.videoTime = true
     this.currentVideo = this.opponentVideos.videos9[0]
+  }
+
+  opponent10Selected() {
+    this.opponentSelect = true
+    this.opponent = 10
+    this.videoTime = true
+    this.currentVideo = this.opponentVideos.videos10[0]
   }
   
 }

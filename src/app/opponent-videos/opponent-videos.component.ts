@@ -134,4 +134,19 @@ export class OpponentVideosComponent {
     "../assets/9-9.mp4",
   ];
 
+  public videos10 = [
+    '../assets/10-0.mp4',
+    '../assets/10-1.mp4',
+    '../assets/10-2.mp4',
+    "../assets/10-3.mp4",
+    "../assets/10-4.mp4",
+    "../assets/10-5.mp4",
+    "../assets/10-6.mp4", 
+    "../assets/10-7.mp4",
+    "../assets/10-8.mp4",
+    "../assets/10-9.mp4",
+    "../assets/10-10.mp4",
+    "../assets/10-11.mp4",
+  ];
+
 }

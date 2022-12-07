@@ -12,18 +12,20 @@
       <img class="opponent-image" src="../assets/opponents/opponent7.png" alt="" (click)="opponent7Selected()">
       <img class="opponent-image" src="../assets/opponents/opponent8.png" alt="" (click)="opponent8Selected()">
       <img class="opponent-image" src="../assets/opponents/opponent9.png" alt="" (click)="opponent9Selected()">
+      <img class="opponent-image" src="../assets/opponents/opponent10.png" alt="" (click)="opponent10Selected()">
     </ng-container>
   </div>
   <div class="upper-frame" *ngIf="opponentSelect === true">
     <div *ngIf="videoTime">
       <div class="center-screen">
         <video class="video" muted autoplay src="{{ currentVideo }}" type="video/mp4"></video>
-        <!-- <button (click)="dismissVideoFrame()">Dismiss Video</button> -->
       </div>
     </div>
   </div>
   <div class="lower-frame" *ngIf="opponentSelect === true">
-    <h3>Player</h3>
+    <div>
+      <h3>Player</h3><img class="coin" src="../assets/coin.png" alt="">
+    </div>
 
     <div
       style="display: inline-block; padding: 2px"
@@ -33,7 +35,7 @@
     </div>
     <div>{{ playerPoints }}</div>
     <div *ngIf="hitMeAvailable" style="display: inline-block">
-      <button class="button" [disabled]="playerStayed" (click)="hitMe()">
+      <button class="button" [disabled]="playerStayed || playerPoints > 21" (click)="hitMe()">
         HIT ME
       </button>
       <button class="button" [disabled]="playerStayed" (click)="playerStays()">
