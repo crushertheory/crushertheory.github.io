@@ -55,7 +55,7 @@ export class AppComponent {
       const cardNumber = this.cardsComponent.getCardNumber();
       this.playerCards.push(this.cardsComponent.allCards[cardNumber]);
       this.playerCards = Array.from(new Set(this.playerCards));
-      this.removeCardsFromDeck(cardNumber);
+      this.removeCardsFromDeck2(cardNumber);
     }
 
     for (const card of this.playerCards) {
@@ -81,7 +81,7 @@ export class AppComponent {
     while (this.computerCards.length < 2) {
       const cardNumber = this.cardsComponent.getCardNumber();
       this.computerCards.push(this.cardsComponent.allCards[cardNumber]);
-      this.removeCardsFromDeck(cardNumber);
+      this.removeCardsFromDeck2(cardNumber);
     }
     for (const card of this.computerCards) {
       this.computerPoints = card.value + this.computerPoints;
@@ -94,7 +94,7 @@ export class AppComponent {
     const cardNumber = this.cardsComponent.getCardNumber();
     const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck(cardNumber);
+    this.removeCardsFromDeck2(cardNumber);
 
     const cardValue = receivedCard.value;
     if (cardValue === 11 && (cardValue + this.playerPoints) > 21) {
@@ -191,17 +191,23 @@ export class AppComponent {
     const cardNumber = this.cardsComponent.getCardNumber();
     const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck(cardNumber);
+    this.removeCardsFromDeck2(cardNumber);
     this.playerPoints = this.playerPoints + receivedCard.value;
     this.playerCredits = this.playerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet;
     this.playerStays();
   }
 
-  public removeCardsFromDeck(cardNumber: number) {
-    this.deckCards = this.deckCards.filter((x) => {
-      return x !== this.cardsComponent.allCards[cardNumber];
-    });
+  // public removeCardsFromDeck(cardNumber: number) {
+  //   this.deckCards = this.deckCards.find((card) => {
+  //     return card !== this.cardsComponent.allCards[cardNumber];
+  //   });
+  // }
+
+  public removeCardsFromDeck2(cardNumber: number) {
+    this.cardsComponent.allCards.find((card) => {
+      return card !== this.cardsComponent.allCards[cardNumber]
+    })
   }
 
   public nextHand() {
@@ -223,8 +229,8 @@ export class AppComponent {
     this.bettingPool = this.bettingPool + this.standardBet * 2;
     this.playerStayed = false;
 
-    if (this.deckCards.length < 4) {
-      this.deckCards = [];
+    if (this.cardsComponent.allCards.length < 4) {
+      this.cardsComponent.allCards = [];
       this.cardsComponent.createDeck();
     }
   }
