@@ -2,36 +2,100 @@
   <div class="opponent-screen" *ngIf="opponentSelect === false">
     <ng-container>
       <div class="opponent-padding">
-      <img class="opponent-image" src="../assets/opponents/opponent1.png" alt="" (click)="opponent = 1; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent2.png" alt="" (click)="opponent = 2; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent3.png" alt="" (click)="opponent = 3; opponentSelected(opponent)">
-    </div>
-    <div class="opponent-padding">
-      <img class="opponent-image" src="../assets/opponents/opponent4.png" alt="" (click)="opponent = 4; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent5.png" alt="" (click)="opponent = 5; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent6.png" alt="" (click)="opponent = 6; opponentSelected(opponent)">
-    </div>
-    <div class="opponent-padding">
-      <img class="opponent-image" src="../assets/opponents/opponent7.png" alt="" (click)="opponent = 7; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent8.png" alt="" (click)="opponent = 8; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent9.png" alt="" (click)="opponent = 9; opponentSelected(opponent)">
-    </div>
-    <div class="opponent-padding">
-      <img class="opponent-image" src="../assets/opponents/opponent10.png" alt="" (click)="opponent = 10; opponentSelected(opponent)">
-      <img class="opponent-image" src="../assets/opponents/opponent11.png" alt="" (click)="opponent = 11; opponentSelected(opponent)">
-    </div>
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent1.png"
+          alt=""
+          (click)="opponent = 1; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent2.png"
+          alt=""
+          (click)="opponent = 2; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent3.png"
+          alt=""
+          (click)="opponent = 3; opponentSelected(opponent)"
+        />
+      </div>
+      <div class="opponent-padding">
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent4.png"
+          alt=""
+          (click)="opponent = 4; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent5.png"
+          alt=""
+          (click)="opponent = 5; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent6.png"
+          alt=""
+          (click)="opponent = 6; opponentSelected(opponent)"
+        />
+      </div>
+      <div class="opponent-padding">
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent7.png"
+          alt=""
+          (click)="opponent = 7; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent8.png"
+          alt=""
+          (click)="opponent = 8; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent9.png"
+          alt=""
+          (click)="opponent = 9; opponentSelected(opponent)"
+        />
+      </div>
+      <div class="opponent-padding">
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent10.png"
+          alt=""
+          (click)="opponent = 10; opponentSelected(opponent)"
+        />
+        <img
+          class="opponent-image"
+          src="../assets/opponents/opponent11.png"
+          alt=""
+          (click)="opponent = 11; opponentSelected(opponent)"
+        />
+      </div>
     </ng-container>
   </div>
   <div class="upper-frame" *ngIf="opponentSelect === true">
     <div *ngIf="videoTime">
       <div class="center-screen">
-        <video class="video" muted autoplay src="{{ currentVideo }}" type="video/mp4"></video>
+        <video
+          class="video"
+          muted
+          autoplay
+          src="{{ currentVideo }}"
+          type="video/mp4"
+        ></video>
       </div>
     </div>
   </div>
   <div class="lower-frame" *ngIf="opponentSelect === true">
     <div>
-      <h3>Player</h3><img class="coin" src="../assets/coin.png" alt="">
+      <h3>
+        Player
+        <round-progress [roundPoints]="playerRoundPoints"></round-progress>
+      </h3>
     </div>
 
     <div
@@ -42,7 +106,11 @@
     </div>
     <div>{{ playerPoints }}</div>
     <div *ngIf="hitMeAvailable" style="display: inline-block">
-      <button class="button" [disabled]="playerStayed || playerPoints > 21" (click)="hitMe()">
+      <button
+        class="button"
+        [disabled]="playerStayed || playerPoints > 21"
+        (click)="hitMe()"
+      >
         HIT ME
       </button>
       <button class="button" [disabled]="playerStayed" (click)="playerStays()">
@@ -52,7 +120,7 @@
         NEXT HAND
       </button>
       <button
-        [disabled]="playerCards.length !== 2 && playerStayed"
+        [disabled]="playerCards.length !== 2"
         (click)="doubleDown()"
         class="button"
       >

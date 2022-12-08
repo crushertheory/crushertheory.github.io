@@ -1,0 +1,23 @@
+<div style="display: inline-block">
+  <img
+    *ngIf="roundPoints === 0"
+    class="ghost-coin"
+    src="../assets/coin.png"
+    alt=""
+  />
+  <img *ngIf="roundPoints >= 1" class="coin" src="../assets/coin.png" alt="" />
+  <img
+    *ngIf="roundPoints <= 1"
+    class="ghost-coin"
+    src="../assets/coin.png"
+    alt=""
+  />
+  <img *ngIf="roundPoints >= 2" class="coin" src="../assets/coin.png" alt="" />
+  <img
+    *ngIf="roundPoints <= 2"
+    class="ghost-coin"
+    src="../assets/coin.png"
+    alt=""
+  />
+  <img *ngIf="roundPoints >= 3" class="coin" src="../assets/coin.png" alt="" />
+</div>
