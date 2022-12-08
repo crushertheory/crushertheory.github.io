@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   templateUrl: './cards.component.html',
 })
 export class CardsComponent {
+  public deckCards: any[] = [];
   public allCards = [
     {
       label: '2he',
@@ -267,4 +268,17 @@ export class CardsComponent {
       image: '../assets/cards/ace_of_spades.png',
     },
   ];
+
+  public getCardNumber(): any {
+    return Math.floor(Math.random() * (1 + 52 - 1) * 1);
+  }
+
+  public createDeck() {
+    const deck = this.allCards
+    while (this.deckCards.length < 52) {
+      this.deckCards.push(deck[this.getCardNumber()]);
+      this.deckCards = Array.from(new Set(this.deckCards));
+    }
+    return this.deckCards;
+  }
 }

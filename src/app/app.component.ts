@@ -8,8 +8,11 @@ import { OpponentVideosComponent } from './opponent-videos/opponent-videos.compo
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(public allCards: CardsComponent, public opponentVideos: OpponentVideosComponent) {}
-  opponentSelect: boolean = false
+  constructor(
+    public cardsComponent: CardsComponent,
+    public opponentVideos: OpponentVideosComponent
+  ) {}
+  opponentSelect: boolean = false;
   title = 'black-jack';
   deckCards: any[] = [];
   playerCards: any[] = [];
@@ -31,38 +34,26 @@ export class AppComponent {
   public standardBet: number = 20;
   public playerWinCount: number = 0;
   public videoTime: boolean = false;
-  public opponent: number = 0
+  public opponent: number = 0;
 
   public currentVideo: string | undefined;
 
-  public deck = this.allCards.allCards
+  // public deck = this.allCards.allCards
 
   ngOnInit() {
-    this.createDeck();
+    this.cardsComponent.createDeck();
     this.dealToPlayer();
     this.dealToComputer();
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet + this.standardBet;
-    this.videoTime = true
-  }
-
-  public getCardNumber(): any {
-    return Math.floor(Math.random() * (1 + 52 - 1) * 1);
-  }
-
-  public async createDeck() {
-    while (this.deckCards.length < 52) {
-      this.deckCards.push(this.deck[this.getCardNumber()]);
-      this.deckCards = Array.from(new Set(this.deckCards));
-    }
-    return this.deckCards;
+    this.videoTime = true;
   }
 
   public dealToPlayer() {
     while (this.playerCards.length < 2) {
-      const cardNumber = this.getCardNumber();
-      this.playerCards.push(this.deck[cardNumber]);
+      const cardNumber = this.cardsComponent.getCardNumber();
+      this.playerCards.push(this.cardsComponent.allCards[cardNumber]);
       this.playerCards = Array.from(new Set(this.playerCards));
       this.removeCardsFromDeck(cardNumber);
     }
@@ -74,9 +65,9 @@ export class AppComponent {
     if (this.playerPoints > 21) {
       this.playerCards.find((card) => {
         if (card.value === 11) {
-          this.playerPoints - 10
+          this.playerPoints - 10;
         }
-      })
+      });
     }
 
     if (this.playerPoints === 21) {
@@ -88,8 +79,8 @@ export class AppComponent {
 
   public dealToComputer() {
     while (this.computerCards.length < 2) {
-      const cardNumber = this.getCardNumber();
-      this.computerCards.push(this.deck[cardNumber]);
+      const cardNumber = this.cardsComponent.getCardNumber();
+      this.computerCards.push(this.cardsComponent.allCards[cardNumber]);
       this.removeCardsFromDeck(cardNumber);
     }
     for (const card of this.computerCards) {
@@ -100,34 +91,27 @@ export class AppComponent {
   }
 
   public hitMe() {
-    const cardNumber = this.getCardNumber();
-    const receivedCard = this.deck[cardNumber];
+    const cardNumber = this.cardsComponent.getCardNumber();
+    const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
     this.removeCardsFromDeck(cardNumber);
 
     const cardValue = receivedCard.value;
-    if (cardValue === 11 && (cardValue + this.playerPoints) > 21) {
+    if (cardValue === 11 && cardValue + this.playerPoints > 21) {
       receivedCard.value = 1;
       this.playerPoints = this.playerPoints - 10;
     }
 
     this.playerPoints = cardValue + this.playerPoints;
 
-    if (this.playerPoints > 21) {
-      this.playerCards.find((x) => {
-        if (x.value === 11) {
-          x.value = 1;
-          this.playerPoints = this.playerPoints - 10;
-        }
-      });
+    const ace = this.playerCards.find((card) => card.value === 11);
+    if (this.playerPoints > 21 && ace) {
+      this.playerPoints = this.playerPoints - 10;
     }
+
     if (this.playerPoints > 21) {
       this.busted = true;
-      this.computeWinner(
-        this.computerPoints,
-        this.playerPoints,
-        this.bettingPool
-      );
+      this.playerStays();
     }
   }
 
@@ -135,8 +119,8 @@ export class AppComponent {
     this.playerStayed = true;
     this.hideInitialCard = false;
     while (this.computerPoints <= 16 && !this.busted) {
-      const cardNumber = this.getCardNumber();
-      const receivedCard = this.deck[cardNumber];
+      const cardNumber = this.cardsComponent.getCardNumber();
+      const receivedCard = this.cardsComponent.allCards[cardNumber];
       this.computerCards.push(receivedCard);
       if (
         receivedCard.value === 11 &&
@@ -188,7 +172,11 @@ export class AppComponent {
         this.computerWins = true;
         return (this.computerCredits = this.computerCredits + pool);
       }
-      if (playerScore >= 22 && computerScore >= 22 && playerScore === computerScore) {
+      if (
+        playerScore >= 22 &&
+        computerScore >= 22 &&
+        playerScore === computerScore
+      ) {
         this.draw = true;
         return (
           (this.playerCredits = this.playerCredits + halfPool),
@@ -201,8 +189,8 @@ export class AppComponent {
 
   public doubleDown() {
     this.doubleDownActivated = true;
-    const cardNumber = this.getCardNumber();
-    const receivedCard = this.deck[cardNumber];
+    const cardNumber = this.cardsComponent.getCardNumber();
+    const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
     this.removeCardsFromDeck(cardNumber);
     this.playerPoints = this.playerPoints + receivedCard.value;
@@ -213,7 +201,7 @@ export class AppComponent {
 
   public removeCardsFromDeck(cardNumber: number) {
     this.deckCards = this.deckCards.filter((x) => {
-      return x !== this.deck[cardNumber];
+      return x !== this.cardsComponent.allCards[cardNumber];
     });
   }
 
@@ -238,47 +226,47 @@ export class AppComponent {
 
     if (this.deckCards.length < 4) {
       this.deckCards = [];
-      this.createDeck();
+      this.cardsComponent.createDeck();
     }
   }
 
   public selectOpponentVideos(opponent: number) {
-    let opponentVideoArray: any
+    let opponentVideoArray: any;
     if (opponent === 1) {
-      opponentVideoArray = this.opponentVideos.videos1
+      opponentVideoArray = this.opponentVideos.videos1;
     }
     if (opponent === 2) {
-      opponentVideoArray = this.opponentVideos.videos2
+      opponentVideoArray = this.opponentVideos.videos2;
     }
     if (opponent === 3) {
-      opponentVideoArray = this.opponentVideos.videos3
+      opponentVideoArray = this.opponentVideos.videos3;
     }
     if (opponent === 4) {
-      opponentVideoArray = this.opponentVideos.videos4
+      opponentVideoArray = this.opponentVideos.videos4;
     }
     if (opponent === 5) {
-      opponentVideoArray = this.opponentVideos.videos5
+      opponentVideoArray = this.opponentVideos.videos5;
     }
     if (opponent === 6) {
-      opponentVideoArray = this.opponentVideos.videos6
+      opponentVideoArray = this.opponentVideos.videos6;
     }
     if (opponent === 7) {
-      opponentVideoArray = this.opponentVideos.videos7
+      opponentVideoArray = this.opponentVideos.videos7;
     }
     if (opponent === 8) {
-      opponentVideoArray = this.opponentVideos.videos8
+      opponentVideoArray = this.opponentVideos.videos8;
     }
     if (opponent === 9) {
-      opponentVideoArray = this.opponentVideos.videos9
+      opponentVideoArray = this.opponentVideos.videos9;
     }
     if (opponent === 10) {
-      opponentVideoArray = this.opponentVideos.videos10
+      opponentVideoArray = this.opponentVideos.videos10;
     }
-    return opponentVideoArray
+    return opponentVideoArray;
   }
 
   public displayVideo() {
-    const opponentVideos: any = this.selectOpponentVideos(this.opponent)
+    const opponentVideos: any = this.selectOpponentVideos(this.opponent);
     if (this.playerWinCount === 3) {
       this.videoTime = true;
       return (this.currentVideo = opponentVideos[1]);
@@ -333,74 +321,9 @@ export class AppComponent {
     }
   }
 
-  opponent1Selected() {
+  opponentSelected(opponent: number) {
     this.opponentSelect = true
-    this.opponent = 1
     this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos1[0]
+    this.currentVideo = this.opponentVideos.videosArray[opponent - 1][0]
   }
-
-  opponent2Selected() {
-    this.opponentSelect = true
-    this.opponent = 2
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos2[0]
-  }
-
-  opponent3Selected() {
-    this.opponentSelect = true
-    this.opponent = 3
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos3[0]
-  }
-
-  opponent4Selected() {
-    this.opponentSelect = true
-    this.opponent = 4
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos4[0]
-  }
-
-  opponent5Selected() {
-    this.opponentSelect = true
-    this.opponent = 5
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos5[0]
-  }
-
-  opponent6Selected() {
-    this.opponentSelect = true
-    this.opponent = 6
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos6[0]
-  }
-
-  opponent7Selected() {
-    this.opponentSelect = true
-    this.opponent = 7
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos7[0]
-  }
-
-  opponent8Selected() {
-    this.opponentSelect = true
-    this.opponent = 8
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos8[0]
-  }
-
-  opponent9Selected() {
-    this.opponentSelect = true
-    this.opponent = 9
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos9[0]
-  }
-
-  opponent10Selected() {
-    this.opponentSelect = true
-    this.opponent = 10
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videos10[0]
-  }
-  
 }
