@@ -97,17 +97,16 @@ export class AppComponent {
     this.removeCardsFromDeck(cardNumber);
 
     const cardValue = receivedCard.value;
-    if (cardValue === 11 && cardValue + this.playerPoints > 21) {
-      receivedCard.value = 1;
+    if (cardValue === 11 && (cardValue + this.playerPoints) > 21) {
       this.playerPoints = this.playerPoints - 10;
     }
 
     this.playerPoints = cardValue + this.playerPoints;
 
-    const ace = this.playerCards.find((card) => card.value === 11);
-    if (this.playerPoints > 21 && ace) {
-      this.playerPoints = this.playerPoints - 10;
-    }
+    // const ace = this.playerCards.find((card) => card.value === 11);
+    // if (this.playerPoints > 21 && ace) {
+    //   this.playerPoints = this.playerPoints - 10;
+    // }
 
     if (this.playerPoints > 21) {
       this.busted = true;
