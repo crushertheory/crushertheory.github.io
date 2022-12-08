@@ -58,16 +58,16 @@ export class AppComponent {
       this.removeCardsFromDeck2(cardNumber);
     }
 
-    for (const card of this.playerCards) {
-      this.playerPoints = card.value + this.playerPoints;
-    }
-
     if (this.playerPoints > 21) {
       this.playerCards.find((card) => {
         if (card.value === 11) {
-          this.playerPoints - 10;
+          card.value = 1;
         }
       });
+    }
+
+    for (const card of this.playerCards) {
+      this.playerPoints = card.value + this.playerPoints;
     }
 
     if (this.playerPoints === 21) {
@@ -83,6 +83,15 @@ export class AppComponent {
       this.computerCards.push(this.cardsComponent.allCards[cardNumber]);
       this.removeCardsFromDeck2(cardNumber);
     }
+
+    if (this.computerPoints > 21) {
+      this.computerCards.find((card) => {
+        if (card.value === 11) {
+          card.value = 1;
+        }
+      });
+    }
+
     for (const card of this.computerCards) {
       this.computerPoints = card.value + this.computerPoints;
     }
@@ -97,8 +106,16 @@ export class AppComponent {
     this.removeCardsFromDeck2(cardNumber);
 
     const cardValue = receivedCard.value;
-    if (cardValue === 11 && (cardValue + this.playerPoints) > 21) {
-      this.playerPoints = this.playerPoints - 10;
+    // if (cardValue === 11 && cardValue + this.playerPoints > 21) {
+    //   this.playerPoints = this.playerPoints - 10;
+    // }
+
+    if (this.playerPoints > 21) {
+      this.playerCards.find((card) => {
+        if (card.value === 11) {
+          card.value = 1;
+        }
+      });
     }
 
     this.playerPoints = cardValue + this.playerPoints;
@@ -206,8 +223,8 @@ export class AppComponent {
 
   public removeCardsFromDeck2(cardNumber: number) {
     this.cardsComponent.allCards.find((card) => {
-      return card !== this.cardsComponent.allCards[cardNumber]
-    })
+      return card !== this.cardsComponent.allCards[cardNumber];
+    });
   }
 
   public nextHand() {
@@ -327,8 +344,8 @@ export class AppComponent {
   }
 
   opponentSelected(opponent: number) {
-    this.opponentSelect = true
-    this.videoTime = true
-    this.currentVideo = this.opponentVideos.videosArray[opponent - 1][0]
+    this.opponentSelect = true;
+    this.videoTime = true;
+    this.currentVideo = this.opponentVideos.videosArray[opponent - 1][0];
   }
 }
