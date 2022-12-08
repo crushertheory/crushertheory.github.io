@@ -149,6 +149,17 @@ export class OpponentVideosComponent {
     "../assets/10-11.mp4",
   ];
 
+  public videos11 = [
+    '../assets/11-0.mp4',
+    '../assets/11-1.mp4',
+    '../assets/11-2.mp4',
+    "../assets/11-3.mp4",
+    "../assets/11-4.mp4",
+    "../assets/11-5.mp4",
+    "../assets/11-6.mp4", 
+    "../assets/11-7.mp4",
+  ];
+
   public videosArray = [
     this.videos1,
     this.videos2,
@@ -159,7 +170,8 @@ export class OpponentVideosComponent {
     this.videos7,
     this.videos8,
     this.videos9,
-    this.videos10
+    this.videos10,
+    this.videos11
   ]
 
 }

@@ -55,7 +55,7 @@ export class AppComponent {
       const cardNumber = this.cardsComponent.getCardNumber();
       this.playerCards.push(this.cardsComponent.allCards[cardNumber]);
       this.playerCards = Array.from(new Set(this.playerCards));
-      this.removeCardsFromDeck2(cardNumber);
+      this.removeCardsFromDeck(cardNumber);
     }
 
     if (this.playerPoints > 21) {
@@ -81,7 +81,7 @@ export class AppComponent {
     while (this.computerCards.length < 2) {
       const cardNumber = this.cardsComponent.getCardNumber();
       this.computerCards.push(this.cardsComponent.allCards[cardNumber]);
-      this.removeCardsFromDeck2(cardNumber);
+      this.removeCardsFromDeck(cardNumber);
     }
 
     if (this.computerPoints > 21) {
@@ -103,12 +103,9 @@ export class AppComponent {
     const cardNumber = this.cardsComponent.getCardNumber();
     const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck2(cardNumber);
+    this.removeCardsFromDeck(cardNumber);
 
     const cardValue = receivedCard.value;
-    // if (cardValue === 11 && cardValue + this.playerPoints > 21) {
-    //   this.playerPoints = this.playerPoints - 10;
-    // }
 
     if (this.playerPoints > 21) {
       this.playerCards.find((card) => {
@@ -119,11 +116,6 @@ export class AppComponent {
     }
 
     this.playerPoints = cardValue + this.playerPoints;
-
-    // const ace = this.playerCards.find((card) => card.value === 11);
-    // if (this.playerPoints > 21 && ace) {
-    //   this.playerPoints = this.playerPoints - 10;
-    // }
 
     if (this.playerPoints > 21) {
       this.busted = true;
@@ -208,20 +200,14 @@ export class AppComponent {
     const cardNumber = this.cardsComponent.getCardNumber();
     const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck2(cardNumber);
+    this.removeCardsFromDeck(cardNumber);
     this.playerPoints = this.playerPoints + receivedCard.value;
     this.playerCredits = this.playerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet;
     this.playerStays();
   }
 
-  // public removeCardsFromDeck(cardNumber: number) {
-  //   this.deckCards = this.deckCards.find((card) => {
-  //     return card !== this.cardsComponent.allCards[cardNumber];
-  //   });
-  // }
-
-  public removeCardsFromDeck2(cardNumber: number) {
+  public removeCardsFromDeck(cardNumber: number) {
     this.cardsComponent.allCards.find((card) => {
       return card !== this.cardsComponent.allCards[cardNumber];
     });
@@ -283,6 +269,9 @@ export class AppComponent {
     }
     if (opponent === 10) {
       opponentVideoArray = this.opponentVideos.videos10;
+    }
+    if (opponent === 11) {
+      opponentVideoArray = this.opponentVideos.videos11;
     }
     return opponentVideoArray;
   }
