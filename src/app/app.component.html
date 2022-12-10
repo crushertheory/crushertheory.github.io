@@ -1,4 +1,4 @@
-<div class="body">
+<div class="something">
   <div class="opponent-screen" *ngIf="opponentSelect === false">
     <ng-container>
       <div class="opponent-padding">
@@ -81,7 +81,7 @@
     <div *ngIf="videoTime">
       <div class="center-screen">
         <video
-          class="video"
+          class="new-video center-screen"
           muted
           autoplay
           src="{{ currentVideo }}"
@@ -90,7 +90,7 @@
       </div>
     </div>
   </div>
-  <div class="lower-frame" *ngIf="opponentSelect === true">
+  <div class="board" *ngIf="opponentSelect === true">
     <div>
       <h3>
         Player
@@ -105,7 +105,32 @@
       <img class="card" src="{{ card.image }}" alt="" />
     </div>
     <div>{{ playerPoints }}</div>
-    <div *ngIf="hitMeAvailable" style="display: inline-block">
+    <div style="display: inline-block">
+      <button
+        class="button-2"
+        [disabled]="playerStayed || playerPoints > 21"
+        (click)="hitMe()"
+      >
+        Hit Me
+      </button>
+      <span style="padding: 5px;"></span>
+      <button class="button-2" [disabled]="playerStayed" (click)="playerStays()">
+        Stay
+      </button>
+      <span style="padding: 5px;"></span>
+      <button
+        [disabled]="playerCards.length !== 2"
+        (click)="doubleDown()"
+        class="button-2"
+      >
+        Double Down
+      </button>
+      <span style="padding: 5px;"></span>
+      <button class="button-2" [disabled]="!playerStayed" (click)="nextHand()">
+        Next Hand
+      </button>
+    </div>
+    <!-- <div style="display: inline-block">
       <button
         class="button"
         [disabled]="playerStayed || playerPoints > 21"
@@ -113,12 +138,11 @@
       >
         HIT ME
       </button>
+      <span style="padding: 5px;"></span>
       <button class="button" [disabled]="playerStayed" (click)="playerStays()">
         STAY?
       </button>
-      <button class="button" [disabled]="!playerStayed" (click)="nextHand()">
-        NEXT HAND
-      </button>
+      <span style="padding: 5px;"></span>
       <button
         [disabled]="playerCards.length !== 2"
         (click)="doubleDown()"
@@ -126,7 +150,11 @@
       >
         DOUBLE DOWN
       </button>
-    </div>
+      <span style="padding: 5px;"></span>
+      <button class="button" [disabled]="!playerStayed" (click)="nextHand()">
+        NEXT HAND
+      </button>
+    </div> -->
 
     <h3>Computer</h3>
     <div
@@ -154,5 +182,6 @@
     <h3 *ngIf="computerWins">You lose :(</h3>
     <h3 *ngIf="draw">DRAW</h3>
     <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
+    {{playerAceCount}}
   </div>
 </div>

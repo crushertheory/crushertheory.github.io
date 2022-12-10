@@ -20,4 +20,20 @@
     alt=""
   />
   <img *ngIf="roundPoints >= 3" class="coin" src="../assets/coin.png" alt="" />
+  <img
+    *ngIf="roundPoints <= 3"
+    class="ghost-coin"
+    src="../assets/coin.png"
+    alt=""
+  />
+  <img *ngIf="roundPoints >= 4" class="coin" src="../assets/coin.png" alt="" />
+  <img
+    *ngIf="roundPoints <= 4"
+    class="ghost-coin"
+    src="../assets/coin.png"
+    alt=""
+  />
+  <img *ngIf="roundPoints >= 5" class="coin" src="../assets/coin.png" alt="" />
+  {{roundPoints}}
+  <!-- <span class="one-hundred">💯</span> -->
 </div>
