@@ -1,79 +1,17 @@
 <div class="something">
   <div class="opponent-screen" *ngIf="opponentSelect === false">
     <ng-container>
-      <div class="opponent-padding">
+      <div
+        style="display: inline-block"
+        *ngFor="let opponentImage of opponentImages; let i = index"
+      >
         <img
           class="opponent-image"
-          src="../assets/opponents/opponent1.png"
+          src="{{ opponentImage }}"
           alt=""
-          (click)="opponent = 1; opponentSelected(opponent)"
+          (click)="opponent = i + 1; opponentSelected(opponent)"
         />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent2.png"
-          alt=""
-          (click)="opponent = 2; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent3.png"
-          alt=""
-          (click)="opponent = 3; opponentSelected(opponent)"
-        />
-      </div>
-      <div class="opponent-padding">
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent4.png"
-          alt=""
-          (click)="opponent = 4; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent5.png"
-          alt=""
-          (click)="opponent = 5; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent6.png"
-          alt=""
-          (click)="opponent = 6; opponentSelected(opponent)"
-        />
-      </div>
-      <div class="opponent-padding">
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent7.png"
-          alt=""
-          (click)="opponent = 7; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent8.png"
-          alt=""
-          (click)="opponent = 8; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent9.png"
-          alt=""
-          (click)="opponent = 9; opponentSelected(opponent)"
-        />
-      </div>
-      <div class="opponent-padding">
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent10.png"
-          alt=""
-          (click)="opponent = 10; opponentSelected(opponent)"
-        />
-        <img
-          class="opponent-image"
-          src="../assets/opponents/opponent11.png"
-          alt=""
-          (click)="opponent = 11; opponentSelected(opponent)"
-        />
+        <span style="padding: 3px"></span>
       </div>
     </ng-container>
   </div>
@@ -113,11 +51,15 @@
       >
         Hit Me
       </button>
-      <span style="padding: 5px;"></span>
-      <button class="button-2" [disabled]="playerStayed" (click)="playerStays()">
+      <span style="padding: 5px"></span>
+      <button
+        class="button-2"
+        [disabled]="playerStayed"
+        (click)="playerStays()"
+      >
         Stay
       </button>
-      <span style="padding: 5px;"></span>
+      <span style="padding: 5px"></span>
       <button
         [disabled]="playerCards.length !== 2"
         (click)="doubleDown()"
@@ -125,37 +67,11 @@
       >
         Double Down
       </button>
-      <span style="padding: 5px;"></span>
+      <span style="padding: 5px"></span>
       <button class="button-2" [disabled]="!playerStayed" (click)="nextHand()">
         Next Hand
       </button>
     </div>
-    <!-- <div style="display: inline-block">
-      <button
-        class="button"
-        [disabled]="playerStayed || playerPoints > 21"
-        (click)="hitMe()"
-      >
-        HIT ME
-      </button>
-      <span style="padding: 5px;"></span>
-      <button class="button" [disabled]="playerStayed" (click)="playerStays()">
-        STAY?
-      </button>
-      <span style="padding: 5px;"></span>
-      <button
-        [disabled]="playerCards.length !== 2"
-        (click)="doubleDown()"
-        class="button"
-      >
-        DOUBLE DOWN
-      </button>
-      <span style="padding: 5px;"></span>
-      <button class="button" [disabled]="!playerStayed" (click)="nextHand()">
-        NEXT HAND
-      </button>
-    </div> -->
-
     <h3>Computer</h3>
     <div
       style="display: inline-block; padding: 2px"
@@ -182,6 +98,5 @@
     <h3 *ngIf="computerWins">You lose :(</h3>
     <h3 *ngIf="draw">DRAW</h3>
     <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
-    {{playerAceCount}}
   </div>
 </div>

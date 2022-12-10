@@ -41,7 +41,22 @@ export class AppComponent {
 
   public currentVideo: string | undefined;
 
-  // public deck = this.allCards.allCards
+  public opponentImages = [
+    "../assets/opponents/opponent1.png",
+    "../assets/opponents/opponent2.png",
+    "../assets/opponents/opponent3.png",
+    "../assets/opponents/opponent4.png",
+    "../assets/opponents/opponent5.png",
+    "../assets/opponents/opponent6.png",
+    "../assets/opponents/opponent7.png",
+    "../assets/opponents/opponent8.png",
+    "../assets/opponents/opponent9.png",
+    "../assets/opponents/opponent10.png",
+    "../assets/opponents/opponent11.png",
+    // "../assets/opponents/opponent1.png",
+    // "../assets/opponents/opponent1.png",
+    // "../assets/opponents/opponent1.png",
+  ]
 
   ngOnInit() {
     this.cardsComponent.createDeck();
@@ -206,20 +221,23 @@ export class AppComponent {
       }
       if (computerScore < playerScore) {
         this.playerWins = true;
-        this.playerWinCount++;
-        this.displayVideo();
         this.playerRoundPoints++;
-        // if (this.playerRoundPoints > 2) {
-        //   this.playerRoundPoints = 0;
-        // }
+        
         if (this.blackJack && this.playerWins) {
           this.playerRoundPoints++
-          this.playerWinCount++;
         }
+
         if (this.doubleDownActivated && this.playerWins) {
           this.playerRoundPoints++
-          this.playerWinCount++;
         }
+
+        if (this.playerRoundPoints >= 5) {
+          this.playerRoundPoints = 0;
+          this.playerWinCount = (this.playerWinCount + 5)
+        }
+
+        this.displayVideo()
+        
         return (this.playerCredits = this.playerCredits + pool);
       }
       if (computerScore === playerScore) {
@@ -232,20 +250,24 @@ export class AppComponent {
     } else {
       if (playerScore < 22 && computerScore >= 22) {
         this.playerWins = true;
-        this.playerWinCount++;
-        this.displayVideo();
+        
         this.playerRoundPoints++;
-        // if (this.playerRoundPoints > 2) {
-        //   this.playerRoundPoints = 0;
-        // }
+        
         if (this.blackJack && this.playerWins) {
           this.playerRoundPoints++
-          this.playerWinCount++;
         }
+
         if (this.doubleDownActivated && this.playerWins) {
           this.playerRoundPoints++
-          this.playerWinCount++;
         }
+
+        if (this.playerRoundPoints >= 5) {
+          this.playerRoundPoints = 0;
+          this.playerWinCount = (this.playerWinCount + 5)
+        }
+
+        this.displayVideo();
+
         return (this.playerCredits = this.playerCredits + pool);
       }
       if (playerScore >= 22 && computerScore < 22) {
@@ -306,10 +328,6 @@ export class AppComponent {
     this.playerAceCount = 0;
     this.computerAceCount = 0;
     this.doubleDownActivated = false
-
-    if (this.playerRoundPoints >= 5) {
-      this.playerRoundPoints = 0;
-    }
 
     if (this.cardsComponent.allCards.length < 4) {
       this.cardsComponent.allCards = [];
