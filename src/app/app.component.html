@@ -42,6 +42,7 @@
     >
       <img class="card" src="{{ card.image }}" alt="" />
     </div>
+    <div>{{playerAceCount}}</div>
     <div>{{ playerPoints }}</div>
     <div style="display: inline-block">
       <button
@@ -61,7 +62,7 @@
       </button>
       <span style="padding: 5px"></span>
       <button
-        [disabled]="playerCards.length !== 2"
+        [disabled]="playerCards.length !== 2 || playerStayed"
         (click)="doubleDown()"
         class="button-2"
       >
