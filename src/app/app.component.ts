@@ -56,6 +56,7 @@ export class AppComponent {
     '../assets/opponents/opponent9.png',
     '../assets/opponents/opponent10.png',
     '../assets/opponents/opponent11.png',
+    '../assets/opponents/opponent12.png',
   ];
 
   ngOnInit() {
