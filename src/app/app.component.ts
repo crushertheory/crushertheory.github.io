@@ -40,24 +40,23 @@ export class AppComponent {
   public computerAceCount: number = 0;
 
   public currentVideo: string | undefined;
-  public debug!: boolean | false
+  public debug!: boolean | false;
+
+  public deck = this.cardsComponent.deckCards
 
   public opponentImages = [
-    "../assets/opponents/opponent1.png",
-    "../assets/opponents/opponent2.png",
-    "../assets/opponents/opponent3.png",
-    "../assets/opponents/opponent4.png",
-    "../assets/opponents/opponent5.png",
-    "../assets/opponents/opponent6.png",
-    "../assets/opponents/opponent7.png",
-    "../assets/opponents/opponent8.png",
-    "../assets/opponents/opponent9.png",
-    "../assets/opponents/opponent10.png",
-    "../assets/opponents/opponent11.png",
-    // "../assets/opponents/opponent1.png",
-    // "../assets/opponents/opponent1.png",
-    // "../assets/opponents/opponent1.png",
-  ]
+    '../assets/opponents/opponent1.png',
+    '../assets/opponents/opponent2.png',
+    '../assets/opponents/opponent3.png',
+    '../assets/opponents/opponent4.png',
+    '../assets/opponents/opponent5.png',
+    '../assets/opponents/opponent6.png',
+    '../assets/opponents/opponent7.png',
+    '../assets/opponents/opponent8.png',
+    '../assets/opponents/opponent9.png',
+    '../assets/opponents/opponent10.png',
+    '../assets/opponents/opponent11.png',
+  ];
 
   ngOnInit() {
     this.cardsComponent.createDeck();
@@ -71,18 +70,15 @@ export class AppComponent {
 
   public dealToPlayer() {
     while (this.playerCards.length < 2) {
-      const cardNumber = this.cardsComponent.getCardNumber();
-      if (this.cardsComponent.allCards[cardNumber].value === 11) {
+      const receivedCard = this.cardsComponent.deckCards[0];
+
+      if (receivedCard.value === 11) {
         this.playerAceCount = this.playerAceCount + 1;
       }
-      this.playerCards.push(this.cardsComponent.allCards[cardNumber]);
-      // this.playerCards = Array.from(new Set(this.playerCards));
-      this.removeCardsFromDeck(cardNumber);
-    }
 
-    // if ((this.playerCards[0].value && this.playerCards[1].value) === 11) {
-    //   this.playerCards[0].value = 1
-    // }
+      this.playerCards.push(receivedCard);
+      this.removeCardsFromDeck();
+    }
 
     for (const card of this.playerCards) {
       this.playerPoints = card.value + this.playerPoints;
@@ -93,17 +89,9 @@ export class AppComponent {
       this.playerPoints = this.playerPoints - 10;
     }
 
-    // if (this.playerPoints > 21) {
-    //   this.playerCards.find((card) => {
-    //     if (card.value === 11 && this.playerPoints > 21) {
-    //       card.value = 1
-    //       this.playerPoints = this.playerPoints - 10
-    //     }
-    //   });
-    // }
-
     if (this.playerPoints === 21) {
       this.blackJack = true;
+      this.playerStays();
     }
     this.hitMeAvailable = true;
     return this.playerCards;
@@ -111,18 +99,14 @@ export class AppComponent {
 
   public dealToComputer() {
     while (this.computerCards.length < 2) {
-      const cardNumber = this.cardsComponent.getCardNumber();
-      if (cardNumber.value === 11) {
+      const receivedCard = this.cardsComponent.deckCards[0];
+      if (receivedCard.value === 11) {
         this.computerAceCount++;
       }
 
-      this.computerCards.push(this.cardsComponent.allCards[cardNumber]);
-      this.removeCardsFromDeck(cardNumber);
+      this.computerCards.push(receivedCard);
+      this.removeCardsFromDeck();
     }
-
-    // if ((this.computerCards[0].value && this.computerCards[1].value) === 11) {
-    //   this.computerCards[0].value = 1
-    // }
 
     for (const card of this.computerCards) {
       this.computerPoints = card.value + this.computerPoints;
@@ -133,24 +117,13 @@ export class AppComponent {
       this.computerPoints = this.computerPoints - 10;
     }
 
-    // if (this.computerPoints > 21) {
-    //   this.computerCards.find((card) => {
-    //     if (card.value === 11 && this.playerPoints > 21) {
-    //       card.value = 1
-    //       this.computerPoints = this.computerPoints - 10
-    //     }
-    //   });
-    // }
-
     return this.computerCards;
   }
 
   public hitMe() {
-    this.debug = true
-    const cardNumber = this.cardsComponent.getCardNumber();
-    const receivedCard = this.cardsComponent.allCards[cardNumber];
+    const receivedCard = this.cardsComponent.deckCards[0];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck(cardNumber);
+    this.removeCardsFromDeck();
 
     const cardValue = receivedCard.value;
     if (cardValue === 11) {
@@ -159,27 +132,14 @@ export class AppComponent {
 
     this.playerPoints = cardValue + this.playerPoints;
 
-    // if (this.playerPoints > 21) {
-    //   this.playerCards.find((card) => {
-    //     if (card.value === 11 && this.playerPoints > 21) {
-    //       card.value = 1
-    //       this.playerPoints = this.playerPoints - 10
-    //     }
-    //   });
-    // }
-    // if (this.playerAceCount > 0 && this.playerPoints > 21) {
-    //   this.playerAceCount = this.playerAceCount - 1
-    //   this .playerCredits = this.playerPoints - 10
-    // }
-
     if (this.playerAceCount > 0 && this.playerPoints > 21) {
       this.playerAceCount = this.playerAceCount - 1;
       this.playerPoints = this.playerPoints - 10;
     }
 
     if (this.playerPoints === 21) {
-      this.blackJack = true
-      this.playerStays()
+      this.blackJack = true;
+      this.playerStays();
     }
 
     if (this.playerPoints > 21) {
@@ -192,15 +152,9 @@ export class AppComponent {
     this.playerStayed = true;
     this.hideInitialCard = false;
     while (this.computerPoints <= 16 && !this.busted) {
-      const cardNumber = this.cardsComponent.getCardNumber();
-      const receivedCard = this.cardsComponent.allCards[cardNumber];
+      const receivedCard = this.cardsComponent.deckCards[0];
       this.computerCards.push(receivedCard);
-      // if (
-      //   receivedCard.value === 11 &&
-      //   (this.computerPoints + receivedCard.value) > 21
-      // ) {
-      //   receivedCard.value = 1;
-      // }
+     
       if (this.computerAceCount > 0 && this.computerPoints > 21) {
         receivedCard.value = 1;
         this.computerAceCount = this.computerAceCount - 1;
@@ -229,22 +183,22 @@ export class AppComponent {
       if (computerScore < playerScore) {
         this.playerWins = true;
         this.playerRoundPoints++;
-        
+
         if (this.blackJack && this.playerWins) {
-          this.playerRoundPoints++
+          this.playerRoundPoints++;
         }
 
         if (this.doubleDownActivated && this.playerWins) {
-          this.playerRoundPoints++
+          this.playerRoundPoints++;
         }
 
         if (this.playerRoundPoints >= 5) {
           this.playerRoundPoints = 0;
-          this.playerWinCount = (this.playerWinCount + 5)
+          this.playerWinCount = this.playerWinCount + 5;
         }
 
-        this.displayVideo()
-        
+        this.displayVideo();
+
         return (this.playerCredits = this.playerCredits + pool);
       }
       if (computerScore === playerScore) {
@@ -257,20 +211,20 @@ export class AppComponent {
     } else {
       if (playerScore < 22 && computerScore >= 22) {
         this.playerWins = true;
-        
+
         this.playerRoundPoints++;
-        
+
         if (this.blackJack && this.playerWins) {
-          this.playerRoundPoints++
+          this.playerRoundPoints++;
         }
 
         if (this.doubleDownActivated && this.playerWins) {
-          this.playerRoundPoints++
+          this.playerRoundPoints++;
         }
 
         if (this.playerRoundPoints >= 5) {
           this.playerRoundPoints = 0;
-          this.playerWinCount = (this.playerWinCount + 5)
+          this.playerWinCount = this.playerWinCount + 5;
         }
 
         this.displayVideo();
@@ -298,20 +252,18 @@ export class AppComponent {
 
   public doubleDown() {
     this.doubleDownActivated = true;
-    const cardNumber = this.cardsComponent.getCardNumber();
-    const receivedCard = this.cardsComponent.allCards[cardNumber];
+    const receivedCard = this.cardsComponent.deckCards[0];
     this.playerCards.push(receivedCard);
-    this.removeCardsFromDeck(cardNumber);
+    this.removeCardsFromDeck();
     this.playerPoints = this.playerPoints + receivedCard.value;
     this.playerCredits = this.playerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet;
     this.playerStays();
   }
 
-  public removeCardsFromDeck(cardNumber: number) {
-    this.cardsComponent.allCards.find((card) => {
-      return card !== this.cardsComponent.allCards[cardNumber];
-    });
+  public removeCardsFromDeck() {
+    const cardToRemove = this.cardsComponent.deckCards[0]
+    return this.cardsComponent.deckCards.splice(0, 1)
   }
 
   public nextHand() {
@@ -334,10 +286,10 @@ export class AppComponent {
     this.playerStayed = false;
     this.playerAceCount = 0;
     this.computerAceCount = 0;
-    this.doubleDownActivated = false
+    this.doubleDownActivated = false;
 
-    if (this.cardsComponent.allCards.length < 4) {
-      this.cardsComponent.allCards = [];
+    if (this.cardsComponent.deckCards.length < 4) {
+      this.cardsComponent.deckCards = [];
       this.cardsComponent.createDeck();
     }
   }
