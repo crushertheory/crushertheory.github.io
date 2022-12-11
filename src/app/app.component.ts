@@ -334,6 +334,9 @@ export class AppComponent {
     if (opponent === 11) {
       opponentVideoArray = this.opponentVideos.videos11;
     }
+    if (opponent === 12) {
+      opponentVideoArray = this.opponentVideos.videos11;
+    }
     return opponentVideoArray;
   }
 
