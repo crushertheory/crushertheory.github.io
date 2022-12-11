@@ -14,7 +14,7 @@ export class AppComponent {
   ) {}
   opponentSelect: boolean = false;
   title = 'black-jack';
-  deckCards: any[] = [];
+  // deckCards: any[] = [];
   playerCards: any[] = [];
   computerCards: any[] = [];
   public playerPoints: number = 0;
@@ -42,7 +42,7 @@ export class AppComponent {
   public currentVideo: string | undefined;
   public debug!: boolean | false;
 
-  public deck = this.cardsComponent.deckCards
+  // public deck = this.cardsComponent.deckCards
 
   public opponentImages = [
     '../assets/opponents/opponent1.png',
@@ -155,6 +155,7 @@ export class AppComponent {
     while (this.computerPoints <= 16 && !this.busted) {
       const receivedCard = this.cardsComponent.deckCards[0];
       this.computerCards.push(receivedCard);
+      this.removeCardsFromDeck()
      
       if (this.computerAceCount > 0 && this.computerPoints > 21) {
         receivedCard.value = 1;
@@ -179,6 +180,9 @@ export class AppComponent {
     if (computerScore < 22 && playerScore < 22) {
       if (computerScore > playerScore) {
         this.computerWins = true;
+        // if (this.doubleDownActivated && this.playerRoundPoints > 0) {
+        //   this.playerRoundPoints = this.playerRoundPoints -1
+        // }
         return (this.computerCredits = this.computerCredits + pool);
       }
       if (computerScore < playerScore) {
@@ -263,7 +267,7 @@ export class AppComponent {
   }
 
   public removeCardsFromDeck() {
-    const cardToRemove = this.cardsComponent.deckCards[0]
+    // const cardToRemove = this.cardsComponent.deckCards[0]
     return this.cardsComponent.deckCards.splice(0, 1)
   }
 
@@ -289,7 +293,7 @@ export class AppComponent {
     this.computerAceCount = 0;
     this.doubleDownActivated = false;
 
-    if (this.cardsComponent.deckCards.length < 4) {
+    if (this.cardsComponent.deckCards.length < 10) {
       this.cardsComponent.deckCards = [];
       this.cardsComponent.createDeck();
     }
