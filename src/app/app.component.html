@@ -30,10 +30,11 @@
   </div>
   <div class="board" *ngIf="opponentSelect === true">
     <div>
-      <h3>
+      <span style="padding: 5px"></span>
+      <div>
         Player
         <round-progress [roundPoints]="playerRoundPoints"></round-progress>
-      </h3>
+      </div>
     </div>
 
     <div
@@ -42,6 +43,8 @@
     >
       <img class="card" src="{{ card.image }}" alt="" />
     </div>
+    <div>{{ playerPoints }}</div>
+    <span style="padding: 5px"></span>
     <div style="display: inline-block">
       <button
         class="button-2"
@@ -71,7 +74,9 @@
         Next Hand
       </button>
     </div>
-    <h3>Computer</h3>
+    <span style="padding: 5px">
+      <div>Computer</div>
+    </span>
     <div
       style="display: inline-block; padding: 2px"
       *ngFor="let card of computerCards; let i = index"

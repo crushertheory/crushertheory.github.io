@@ -46,7 +46,7 @@
   margin: auto;
   display: block;
   width: 0px;
-  height: 300px;
+  height: 60vh;
   min-width: 90%;
   max-width: 90%;
   min-height: 90%;
@@ -66,7 +66,7 @@
 }
 
 .video {
-  max-height: 1000px;
+  max-height: 1400px;
   // margin-top: 150px;
 }
 
@@ -137,6 +137,7 @@ app-main {
 .something {
   background-color: #0f172a;
   color: white;
+  height: 100vh;
 }
 
 .button-2 {
@@ -150,4 +151,8 @@ app-main {
   border: none;
   background-color: rgb(128, 210, 210);
   font-size: x-small;
+}
+
+player-title {
+    font-size: x-small;
 }
