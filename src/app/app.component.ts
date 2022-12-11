@@ -40,6 +40,7 @@ export class AppComponent {
   public computerAceCount: number = 0;
 
   public currentVideo: string | undefined;
+  public debug!: boolean | false
 
   public opponentImages = [
     "../assets/opponents/opponent1.png",
@@ -145,6 +146,7 @@ export class AppComponent {
   }
 
   public hitMe() {
+    this.debug = true
     const cardNumber = this.cardsComponent.getCardNumber();
     const receivedCard = this.cardsComponent.allCards[cardNumber];
     this.playerCards.push(receivedCard);
