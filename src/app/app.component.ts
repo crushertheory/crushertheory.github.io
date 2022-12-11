@@ -57,6 +57,7 @@ export class AppComponent {
     '../assets/opponents/opponent10.png',
     '../assets/opponents/opponent11.png',
     '../assets/opponents/opponent12.png',
+    '../assets/opponents/opponent13.png',
   ];
 
   ngOnInit() {
@@ -335,7 +336,10 @@ export class AppComponent {
       opponentVideoArray = this.opponentVideos.videos11;
     }
     if (opponent === 12) {
-      opponentVideoArray = this.opponentVideos.videos11;
+      opponentVideoArray = this.opponentVideos.videos12;
+    }
+    if (opponent === 13) {
+      opponentVideoArray = this.opponentVideos.videos13;
     }
     return opponentVideoArray;
   }
