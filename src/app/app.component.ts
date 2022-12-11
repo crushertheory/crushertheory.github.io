@@ -177,6 +177,11 @@ export class AppComponent {
       this.playerPoints = this.playerPoints - 10;
     }
 
+    if (this.playerPoints === 21) {
+      this.blackJack = true
+      this.playerStays()
+    }
+
     if (this.playerPoints > 21) {
       this.busted = true;
       this.playerStays();
