@@ -74,22 +74,27 @@ export class AppComponent {
     while (this.playerCards.length < 2) {
       const receivedCard = this.cardsComponent.deckCards[0];
 
-      if (receivedCard.value === 11) {
-        this.playerAceCount = this.playerAceCount + 1;
-      }
+      // if (receivedCard.value === 11) {
+      //   this.playerAceCount = this.playerAceCount + 1;
+      // }
 
       this.playerCards.push(receivedCard);
       this.removeCardsFromDeck();
+      this.playerPoints = receivedCard.value + this.playerPoints;
+      if (receivedCard.value === 11 && this.playerPoints > 21) {
+        receivedCard.value = 1
+        this.playerPoints = (this.playerPoints - 10)
+      }
     }
 
-    for (const card of this.playerCards) {
-      this.playerPoints = card.value + this.playerPoints;
-    }
+    // for (const card of this.playerCards) {
+    //   this.playerPoints = card.value + this.playerPoints;
+    // }
 
-    if (this.playerAceCount > 0 && this.playerPoints > 21) {
-      this.playerAceCount = this.playerAceCount - 1;
-      this.playerPoints = this.playerPoints - 10;
-    }
+    // if (this.playerAceCount > 0 && this.playerPoints > 21) {
+    //   this.playerAceCount = this.playerAceCount - 1;
+    //   this.playerPoints = this.playerPoints - 10;
+    // }
 
     if (this.playerPoints === 21) {
       this.blackJack = true;
@@ -102,9 +107,9 @@ export class AppComponent {
   public dealToComputer() {
     while (this.computerCards.length < 2) {
       const receivedCard = this.cardsComponent.deckCards[0];
-      if (receivedCard.value === 11) {
-        this.computerAceCount++;
-      }
+      // if (receivedCard.value === 11) {
+      //   this.computerAceCount++;
+      // }
 
       this.computerCards.push(receivedCard);
       this.removeCardsFromDeck();
@@ -128,16 +133,19 @@ export class AppComponent {
     this.removeCardsFromDeck();
 
     const cardValue = receivedCard.value;
-    if (cardValue === 11) {
-      this.playerAceCount = this.playerAceCount + 1;
+    // if (cardValue === 11) {
+    //   this.playerAceCount = this.playerAceCount + 1;
+    // }
+
+    this.playerPoints = receivedCard.value + this.playerPoints;
+    if (receivedCard.value === 11 && this.playerPoints > 21) {
+      this.playerPoints = (this.playerPoints - 10)
     }
 
-    this.playerPoints = cardValue + this.playerPoints;
-
-    if (this.playerAceCount > 0 && this.playerPoints > 21) {
-      this.playerAceCount = this.playerAceCount - 1;
-      this.playerPoints = this.playerPoints - 10;
-    }
+    // if (this.playerAceCount > 0 && this.playerPoints > 21) {
+    //   this.playerAceCount = this.playerAceCount - 1;
+    //   this.playerPoints = this.playerPoints - 10;
+    // }
 
     if (this.playerPoints === 21) {
       this.blackJack = true;
