@@ -82,8 +82,8 @@ export class AppComponent {
       this.removeCardsFromDeck();
       this.playerPoints = receivedCard.value + this.playerPoints;
       if (receivedCard.value === 11 && this.playerPoints > 21) {
-        receivedCard.value = 1
-        this.playerPoints = (this.playerPoints - 10)
+        receivedCard.value = 1;
+        this.playerPoints = this.playerPoints - 10;
       }
     }
 
@@ -139,7 +139,14 @@ export class AppComponent {
 
     this.playerPoints = receivedCard.value + this.playerPoints;
     if (receivedCard.value === 11 && this.playerPoints > 21) {
-      this.playerPoints = (this.playerPoints - 10)
+      this.playerPoints = this.playerPoints - 10;
+    }
+
+    const ace = this.playerCards.find((card) => card.value === 11);
+
+    if (ace && this.playerPoints > 21) {
+      ace.value = 1;
+      this.playerPoints = this.playerPoints - 10;
     }
 
     // if (this.playerAceCount > 0 && this.playerPoints > 21) {
@@ -164,8 +171,8 @@ export class AppComponent {
     while (this.computerPoints <= 16 && !this.busted) {
       const receivedCard = this.cardsComponent.deckCards[0];
       this.computerCards.push(receivedCard);
-      this.removeCardsFromDeck()
-     
+      this.removeCardsFromDeck();
+
       if (this.computerAceCount > 0 && this.computerPoints > 21) {
         receivedCard.value = 1;
         this.computerAceCount = this.computerAceCount - 1;
@@ -277,7 +284,7 @@ export class AppComponent {
 
   public removeCardsFromDeck() {
     // const cardToRemove = this.cardsComponent.deckCards[0]
-    return this.cardsComponent.deckCards.splice(0, 1)
+    return this.cardsComponent.deckCards.splice(0, 1);
   }
 
   public nextHand() {
