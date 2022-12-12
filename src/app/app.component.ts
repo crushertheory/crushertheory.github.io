@@ -196,9 +196,9 @@ export class AppComponent {
     if (computerScore < 22 && playerScore < 22) {
       if (computerScore > playerScore) {
         this.computerWins = true;
-        // if (this.doubleDownActivated && this.playerRoundPoints > 0) {
-        //   this.playerRoundPoints = this.playerRoundPoints -1
-        // }
+        if (this.doubleDownActivated && this.playerRoundPoints > 0) {
+          this.playerRoundPoints = this.playerRoundPoints -1
+        }
         return (this.computerCredits = this.computerCredits + pool);
       }
       if (computerScore < playerScore) {
@@ -254,6 +254,9 @@ export class AppComponent {
       }
       if (playerScore >= 22 && computerScore < 22) {
         this.computerWins = true;
+        if (this.doubleDownActivated && this.playerRoundPoints > 0) {
+          this.playerRoundPoints = this.playerRoundPoints -1
+        }
         return (this.computerCredits = this.computerCredits + pool);
       }
       if (
