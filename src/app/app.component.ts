@@ -62,94 +62,78 @@ export class AppComponent {
 
   ngOnInit() {
     this.cardsComponent.createDeck();
-    this.dealToPlayer2();
-    this.dealToComputer();
+    this.dealCards(this.playerCards);
+    this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet + this.standardBet;
     this.videoTime = true;
   }
 
-  public dealToPlayer2() {
-    while (this.playerCards.length < 2) {
+  public dealCards(hand: any[]) {
+    let points: number = 0
+    while (hand.length < 2) {
       // Get first card from shuffled deck
       const dealtCard = this.cardsComponent.deckCards[0];
 
       // Add dealt card to player's hand
-      this.playerCards.push(dealtCard);
+      hand.push(dealtCard);
 
       // Remove dealt card from deck
       this.removeCardsFromDeck();
 
       // Add dealt card value to player's points
-      this.playerPoints = this.playerPoints + dealtCard.value;
+      points = points + dealtCard.value;
 
       // There shold only be on possible instance of a player busting during the initial deal: when both dealt cards are aces.
       // If this occurs, reduce the value of the ace to one and remove ten points from player score
-      if (this.playerPoints > 21 && dealtCard.value === 11) {
-        this.playerPoints = this.playerPoints - 10;
+      if (points > 21 && dealtCard.value === 11) {
+        points = points - 10;
         dealtCard.value = 1;
       }
     }
-    // Deal with player receiving blackjack on initial deal
-    if (this.playerPoints === 21) {
+
+    if (points === 21 && hand === this.playerCards) {
       this.blackJack = true;
     }
-  }
 
-  public dealToComputer() {
-    while (this.computerCards.length < 2) {
-      const receivedCard = this.cardsComponent.deckCards[0];
-      // if (receivedCard.value === 11) {
-      //   this.computerAceCount++;
-      // }
-
-      this.computerCards.push(receivedCard);
-      this.removeCardsFromDeck();
+    if (hand === this.playerCards) {
+      this.playerPoints = this.playerPoints + points;
+    } else {
+      this.computerPoints = this.computerPoints + points
     }
-
-    for (const card of this.computerCards) {
-      this.computerPoints = card.value + this.computerPoints;
-    }
-
-    if (this.computerAceCount > 0 && this.computerPoints > 21) {
-      this.computerAceCount = this.computerAceCount - 1;
-      this.computerPoints = this.computerPoints - 10;
-    }
-
-    return this.computerCards;
   }
 
   public hitMe() {
     const dealtCard = this.cardsComponent.deckCards[0];
     this.removeCardsFromDeck();
 
-    this.playerPoints = (this.playerPoints + dealtCard.value);
-    
+    this.playerPoints = this.playerPoints + dealtCard.value;
+
     if (dealtCard.value === 11 && this.playerPoints > 21) {
       dealtCard.value = 1;
-      this.playerPoints = (this.playerPoints - 10);
+      this.playerPoints = this.playerPoints - 10;
     }
 
     this.playerCards.push(dealtCard);
 
     const ace = this.playerCards.find((card) => {
-      card.value === 11
-    })
-    
+      card.value === 11;
+    });
+
     if (this.playerPoints > 21 && ace) {
-      ace.value = 1
-      this.playerPoints = (this.playerPoints - 10)
+      ace.value = 1;
+      this.playerPoints = this.playerPoints - 10;
     }
 
     if (this.playerPoints === 21) {
-      this.blackJack = true
-      this.playerStays()
+      this.blackJack = true;
+      this.playerStays();
     }
 
     if (this.playerPoints > 21) {
-      this.busted = true
-      this.playerStays()
+      this.busted = true;
+      this.playerStays();
     }
   }
 
@@ -293,8 +277,8 @@ export class AppComponent {
     this.busted = false;
     this.blackJack = false;
     this.bettingPool = 0;
-    this.dealToPlayer2();
-    this.dealToComputer();
+    this.dealCards(this.playerCards);
+    this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet * 2;
