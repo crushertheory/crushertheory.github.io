@@ -62,7 +62,7 @@ export class AppComponent {
 
   ngOnInit() {
     this.cardsComponent.createDeck();
-    this.dealToPlayer();
+    this.dealToPlayer2();
     this.dealToComputer();
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
@@ -70,38 +70,31 @@ export class AppComponent {
     this.videoTime = true;
   }
 
-  public dealToPlayer() {
+  public dealToPlayer2() {
     while (this.playerCards.length < 2) {
-      const receivedCard = this.cardsComponent.deckCards[0];
+      // Get first card from shuffled deck
+      const dealtCard = this.cardsComponent.deckCards[0];
 
-      // if (receivedCard.value === 11) {
-      //   this.playerAceCount = this.playerAceCount + 1;
-      // }
+      // Add dealt card to player's hand
+      this.playerCards.push(dealtCard);
 
-      this.playerCards.push(receivedCard);
+      // Remove dealt card from deck
       this.removeCardsFromDeck();
-      this.playerPoints = receivedCard.value + this.playerPoints;
-      if (receivedCard.value === 11 && this.playerPoints > 21) {
-        receivedCard.value = 1;
+
+      // Add dealt card value to player's points
+      this.playerPoints = this.playerPoints + dealtCard.value;
+
+      // There shold only be on possible instance of a player busting during the initial deal: when both dealt cards are aces.
+      // If this occurs, reduce the value of the ace to one and remove ten points from player score
+      if (this.playerPoints > 21 && dealtCard.value === 11) {
         this.playerPoints = this.playerPoints - 10;
+        dealtCard.value = 1;
       }
     }
-
-    // for (const card of this.playerCards) {
-    //   this.playerPoints = card.value + this.playerPoints;
-    // }
-
-    // if (this.playerAceCount > 0 && this.playerPoints > 21) {
-    //   this.playerAceCount = this.playerAceCount - 1;
-    //   this.playerPoints = this.playerPoints - 10;
-    // }
-
+    // Deal with player receiving blackjack on initial deal
     if (this.playerPoints === 21) {
       this.blackJack = true;
-      this.playerStays();
     }
-    this.hitMeAvailable = true;
-    return this.playerCards;
   }
 
   public dealToComputer() {
@@ -128,40 +121,35 @@ export class AppComponent {
   }
 
   public hitMe() {
-    const receivedCard = this.cardsComponent.deckCards[0];
-    this.playerCards.push(receivedCard);
+    const dealtCard = this.cardsComponent.deckCards[0];
     this.removeCardsFromDeck();
 
-    const cardValue = receivedCard.value;
-    // if (cardValue === 11) {
-    //   this.playerAceCount = this.playerAceCount + 1;
-    // }
-
-    this.playerPoints = receivedCard.value + this.playerPoints;
-    if (receivedCard.value === 11 && this.playerPoints > 21) {
-      this.playerPoints = this.playerPoints - 10;
+    this.playerPoints = (this.playerPoints + dealtCard.value);
+    
+    if (dealtCard.value === 11 && this.playerPoints > 21) {
+      dealtCard.value = 1;
+      this.playerPoints = (this.playerPoints - 10);
     }
 
-    const ace = this.playerCards.find((card) => card.value === 11);
+    this.playerCards.push(dealtCard);
 
-    if (ace && this.playerPoints > 21) {
-      ace.value = 1;
-      this.playerPoints = this.playerPoints - 10;
+    const ace = this.playerCards.find((card) => {
+      card.value === 11
+    })
+    
+    if (this.playerPoints > 21 && ace) {
+      ace.value = 1
+      this.playerPoints = (this.playerPoints - 10)
     }
-
-    // if (this.playerAceCount > 0 && this.playerPoints > 21) {
-    //   this.playerAceCount = this.playerAceCount - 1;
-    //   this.playerPoints = this.playerPoints - 10;
-    // }
 
     if (this.playerPoints === 21) {
-      this.blackJack = true;
-      this.playerStays();
+      this.blackJack = true
+      this.playerStays()
     }
 
     if (this.playerPoints > 21) {
-      this.busted = true;
-      this.playerStays();
+      this.busted = true
+      this.playerStays()
     }
   }
 
@@ -174,7 +162,7 @@ export class AppComponent {
       this.removeCardsFromDeck();
 
       if (this.computerAceCount > 0 && this.computerPoints > 21) {
-        receivedCard.value = 1;
+        // receivedCard.value = 1;
         this.computerAceCount = this.computerAceCount - 1;
         this.computerPoints = this.computerPoints - 10;
       }
@@ -196,8 +184,10 @@ export class AppComponent {
     if (computerScore < 22 && playerScore < 22) {
       if (computerScore > playerScore) {
         this.computerWins = true;
+
+        // Remove a point if the player doubled down and lost the hand - GAMBLING!
         if (this.doubleDownActivated && this.playerRoundPoints > 0) {
-          this.playerRoundPoints = this.playerRoundPoints -1
+          this.playerRoundPoints = this.playerRoundPoints - 1;
         }
         return (this.computerCredits = this.computerCredits + pool);
       }
@@ -254,8 +244,9 @@ export class AppComponent {
       }
       if (playerScore >= 22 && computerScore < 22) {
         this.computerWins = true;
+        // Remove a point if the player doubled down and lost the hand - GAMBLING!
         if (this.doubleDownActivated && this.playerRoundPoints > 0) {
-          this.playerRoundPoints = this.playerRoundPoints -1
+          this.playerRoundPoints = this.playerRoundPoints - 1;
         }
         return (this.computerCredits = this.computerCredits + pool);
       }
@@ -302,7 +293,7 @@ export class AppComponent {
     this.busted = false;
     this.blackJack = false;
     this.bettingPool = 0;
-    this.dealToPlayer();
+    this.dealToPlayer2();
     this.dealToComputer();
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;

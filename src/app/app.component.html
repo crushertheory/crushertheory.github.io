@@ -104,4 +104,6 @@
     <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
   </div>
 </div>
-<h3>{{cardsComponent.deckCards.length}}</h3>
+<h3 *ngFor="let card of playerCards">
+  {{card.value}}
+</h3>
