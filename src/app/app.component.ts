@@ -83,9 +83,9 @@ export class AppComponent {
 
       // Add dealt card to player's hand
 
-      // // ***TODO: Remove after debugging***
+      // ***TODO: Remove after debugging***
       // this.debug = true
-      // if (this.debug && hand === this.playerCards && hand.length === 0) {
+      // if (this.debug && this.dealingToPlayer && hand.length === 0) {
       //   dealtCard.value = 11
       // }
       hand.push(dealtCard);
@@ -96,11 +96,10 @@ export class AppComponent {
       // Add dealt card value to player's points
       points = points + dealtCard.value;
 
-      // There shold only be on possible instance of a player busting during the initial deal: when both dealt cards are aces.
-      // If this occurs, reduce the value of the ace to one and remove ten points from player score
-      if (points > 21 && dealtCard.value === 11) {
-        points = points - 10;
-        dealtCard.value = 1;
+      if (this.dealingToPlayer) {
+        this.checkForAces(this.playerPoints, this.playerCards)
+      } else {
+        this.checkForAces(this.computerPoints, this.computerCards)
       }
     }
 
@@ -123,29 +122,15 @@ export class AppComponent {
   }
 
   public hitMe() {
+    this.dealingToPlayer = true
     const dealtCard = this.cardsComponent.deckCards[0];
     this.removeCardsFromDeck();
 
     this.playerPoints = this.playerPoints + dealtCard.value;
 
-    if (dealtCard.value === 11 && this.playerPoints > 21) {
-      dealtCard.value = 1;
-      this.playerPoints = this.playerPoints - 10;
-    }
-
     this.playerCards.push(dealtCard);
 
-    const ace = this.playerCards.find((card) => {
-      if (card.value === 11) {
-        return true
-      }
-      return false
-    });
-
-    if (this.playerPoints > 21 && ace) {
-      ace.value = 1;
-      this.playerPoints = this.playerPoints - 10;
-    }
+    this.checkForAces(this.playerPoints, this.playerCards)
 
     if (this.playerPoints === 21) {
       this.blackJack = true;
@@ -155,6 +140,29 @@ export class AppComponent {
     if (this.playerPoints > 21) {
       this.busted = true;
       this.playerStays();
+    }
+    this.dealingToPlayer = false
+  }
+
+  public checkForAces(points: number, hand: any[]) {
+    while (points > 21) {
+      const ace = hand.find((card) => {
+        if (card.value === 11) {
+          return card
+        }
+        return undefined
+      });
+      if (ace) {
+        ace.value = 1;
+        points = points - 10;
+        if (this.dealingToPlayer) {
+          this.playerPoints = points
+        } else {
+          this.computerPoints = points
+        }
+      } else {
+        break
+      }
     }
   }
 
@@ -166,11 +174,13 @@ export class AppComponent {
       this.computerCards.push(receivedCard);
       this.removeCardsFromDeck();
 
-      if (this.computerAceCount > 0 && this.computerPoints > 21) {
-        // receivedCard.value = 1;
-        this.computerAceCount = this.computerAceCount - 1;
-        this.computerPoints = this.computerPoints - 10;
-      }
+      // if (this.computerAceCount > 0 && this.computerPoints > 21) {
+      //   // receivedCard.value = 1;
+      //   this.computerAceCount = this.computerAceCount - 1;
+      //   this.computerPoints = this.computerPoints - 10;
+      // }
+
+      this.checkForAces(this.computerPoints, this.computerCards)
       this.computerPoints = receivedCard.value + this.computerPoints;
     }
     this.computeWinner(
