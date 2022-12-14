@@ -352,8 +352,7 @@ export class AppComponent {
   }
 
   public displayVideo() {
-    const opponentVideos: any = this.selectOpponentVideos(100);
-    // const opponentVideos: any = this.selectOpponentVideos(this.opponent);
+    const opponentVideos: any = this.selectOpponentVideos(this.opponent);
     if (this.playerWinCount === 5) {
       this.videoTime = true;
       return (this.currentVideo = opponentVideos[1]);
