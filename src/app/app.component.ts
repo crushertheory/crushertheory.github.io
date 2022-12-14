@@ -38,6 +38,8 @@ export class AppComponent {
   public playerRoundPoints: number = 0;
   public playerAceCount: number = 0;
   public computerAceCount: number = 0;
+  public dealingToPlayer: boolean = false
+  public splitAvailable: boolean = false
 
   public currentVideo: string | undefined;
   public debug!: boolean | false;
@@ -58,11 +60,14 @@ export class AppComponent {
     '../assets/opponents/opponent11.png',
     '../assets/opponents/opponent12.png',
     '../assets/opponents/opponent13.png',
+    '../assets/opponents/opponent14.png',
   ];
 
   ngOnInit() {
     this.cardsComponent.createDeck();
+    this.dealingToPlayer = true
     this.dealCards(this.playerCards);
+    this.dealingToPlayer = false
     this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
@@ -70,7 +75,7 @@ export class AppComponent {
     this.videoTime = true;
   }
 
-  public dealCards(hand: any[]) {
+  public async dealCards(hand: any[]) {
     let points: number = 0
     while (hand.length < 2) {
       // Get first card from shuffled deck
@@ -99,12 +104,18 @@ export class AppComponent {
       }
     }
 
-    if (points === 21 && hand === this.playerCards) {
+    if (points === 21 && this.dealingToPlayer) {
       this.blackJack = true;
+      this.playerPoints = this.playerPoints + points;
       this.playerStays()
+      return
     }
 
-    if (hand === this.playerCards) {
+    if (this.dealingToPlayer && hand[0].value === hand[1].value) {
+      this.splitAvailable = true
+    }
+
+    if (this.dealingToPlayer) {
       this.playerPoints = this.playerPoints + points;
     } else {
       this.computerPoints = this.computerPoints + points
@@ -287,7 +298,9 @@ export class AppComponent {
     this.busted = false;
     this.blackJack = false;
     this.bettingPool = 0;
+    this.dealingToPlayer = true
     this.dealCards(this.playerCards);
+    this.dealingToPlayer = false
     this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
@@ -296,6 +309,7 @@ export class AppComponent {
     this.playerAceCount = 0;
     this.computerAceCount = 0;
     this.doubleDownActivated = false;
+    this.splitAvailable = false
 
     if (this.cardsComponent.deckCards.length < 10) {
       this.cardsComponent.deckCards = [];
@@ -347,6 +361,9 @@ export class AppComponent {
     }
     if (opponent === 13) {
       opponentVideoArray = this.opponentVideos.videos13;
+    }
+    if (opponent === 14) {
+      opponentVideoArray = this.opponentVideos.videos14;
     }
     return opponentVideoArray;
   }
