@@ -39,7 +39,6 @@ export class AppComponent {
   public playerAceCount: number = 0;
   public computerAceCount: number = 0;
   public dealingToPlayer: boolean = false
-  public splitAvailable: boolean = false
 
   public currentVideo: string | undefined;
   public debug!: boolean | false;
@@ -103,21 +102,21 @@ export class AppComponent {
       }
     }
 
+    this.checkForPlayerBlackjack(points)
+
+    if (this.dealingToPlayer && !this.blackJack) {
+      this.playerPoints = this.playerPoints + points;
+    } else {
+      this.computerPoints = this.computerPoints + points
+    }
+  }
+
+  public checkForPlayerBlackjack(points: number) {
     if (points === 21 && this.dealingToPlayer) {
       this.blackJack = true;
       this.playerPoints = this.playerPoints + points;
       this.playerStays()
       return
-    }
-
-    if (this.dealingToPlayer && hand[0].value === hand[1].value) {
-      this.splitAvailable = true
-    }
-
-    if (this.dealingToPlayer) {
-      this.playerPoints = this.playerPoints + points;
-    } else {
-      this.computerPoints = this.computerPoints + points
     }
   }
 
@@ -173,12 +172,6 @@ export class AppComponent {
       const receivedCard = this.cardsComponent.deckCards[0];
       this.computerCards.push(receivedCard);
       this.removeCardsFromDeck();
-
-      // if (this.computerAceCount > 0 && this.computerPoints > 21) {
-      //   // receivedCard.value = 1;
-      //   this.computerAceCount = this.computerAceCount - 1;
-      //   this.computerPoints = this.computerPoints - 10;
-      // }
 
       this.checkForAces(this.computerPoints, this.computerCards)
       this.computerPoints = receivedCard.value + this.computerPoints;
@@ -281,6 +274,7 @@ export class AppComponent {
   }
 
   public doubleDown() {
+    this.dealingToPlayer = true
     this.doubleDownActivated = true;
     const receivedCard = this.cardsComponent.deckCards[0];
     this.playerCards.push(receivedCard);
@@ -288,11 +282,15 @@ export class AppComponent {
     this.playerPoints = this.playerPoints + receivedCard.value;
     this.playerCredits = this.playerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet;
+    this.checkForAces(this.playerPoints, this.playerCards)
+    if (this.playerPoints === 21) {
+      this.blackJack = true
+    }
+    this.dealingToPlayer = false
     this.playerStays();
   }
 
   public removeCardsFromDeck() {
-    // const cardToRemove = this.cardsComponent.deckCards[0]
     return this.cardsComponent.deckCards.splice(0, 1);
   }
 
@@ -319,17 +317,12 @@ export class AppComponent {
     this.playerAceCount = 0;
     this.computerAceCount = 0;
     this.doubleDownActivated = false;
-    this.splitAvailable = false
 
-    if (this.cardsComponent.deckCards.length < 10) {
+    if (this.cardsComponent.deckCards.length < 5) {
       this.cardsComponent.deckCards = [];
       this.cardsComponent.createDeck();
     }
   }
-
-  // public resetAces() {
-  //   const acesToReset = this.cardsComponent.
-  // }
 
   public selectOpponentVideos(opponent: number) {
     let opponentVideoArray: any;
