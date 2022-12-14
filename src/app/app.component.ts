@@ -77,6 +77,12 @@ export class AppComponent {
       const dealtCard = this.cardsComponent.deckCards[0];
 
       // Add dealt card to player's hand
+
+      // // ***TODO: Remove after debugging***
+      // this.debug = true
+      // if (this.debug && hand === this.playerCards && hand.length === 0) {
+      //   dealtCard.value = 11
+      // }
       hand.push(dealtCard);
 
       // Remove dealt card from deck
@@ -95,6 +101,7 @@ export class AppComponent {
 
     if (points === 21 && hand === this.playerCards) {
       this.blackJack = true;
+      this.playerStays()
     }
 
     if (hand === this.playerCards) {
@@ -118,7 +125,10 @@ export class AppComponent {
     this.playerCards.push(dealtCard);
 
     const ace = this.playerCards.find((card) => {
-      card.value === 11;
+      if (card.value === 11) {
+        return true
+      }
+      return false
     });
 
     if (this.playerPoints > 21 && ace) {
@@ -293,6 +303,10 @@ export class AppComponent {
     }
   }
 
+  // public resetAces() {
+  //   const acesToReset = this.cardsComponent.
+  // }
+
   public selectOpponentVideos(opponent: number) {
     let opponentVideoArray: any;
     if (opponent === 1) {
@@ -338,7 +352,8 @@ export class AppComponent {
   }
 
   public displayVideo() {
-    const opponentVideos: any = this.selectOpponentVideos(this.opponent);
+    const opponentVideos: any = this.selectOpponentVideos(100);
+    // const opponentVideos: any = this.selectOpponentVideos(this.opponent);
     if (this.playerWinCount === 5) {
       this.videoTime = true;
       return (this.currentVideo = opponentVideos[1]);

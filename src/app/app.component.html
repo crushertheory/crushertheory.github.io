@@ -20,7 +20,7 @@
       <div class="center-screen">
         <video
           class="new-video center-screen"
-          [muted] = true
+          [muted]="true"
           autoplay
           src="{{ currentVideo }}"
           type="video/mp4"
@@ -104,6 +104,3 @@
     <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
   </div>
 </div>
-<h3 *ngFor="let card of playerCards">
-  {{card.value}}
-</h3>
