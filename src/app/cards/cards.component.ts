@@ -273,18 +273,23 @@ export class CardsComponent {
     return Math.floor(Math.random() * (1 + 52 - 1) * 1);
   }
 
+  public resetAces() {
+
+    for (const card of this.deckCards) {
+      const aceToBeReset = this.deckCards.find((card) => card.value === 1)
+      if (aceToBeReset) {
+        aceToBeReset.aceToBeReset.value = 11
+      }
+    }
+  }
+
   public createDeck() {
     const deck = this.allCards
     while (this.deckCards.length < 52) {
       this.deckCards.push(deck[this.getCardNumber()]);
       this.deckCards = Array.from(new Set(this.deckCards));
-      this.deckCards.find((x) => {
-        if (x.value === 1) {
-          x.value = 11
-        }
-      })
     }
-    this.deckCards.find((x) => x.value === 1)
+    this.resetAces()
     return this.deckCards;
   }
 }

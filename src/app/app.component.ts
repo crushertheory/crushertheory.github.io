@@ -89,7 +89,7 @@ export class AppComponent {
       );
       console.log(this.cardsComponent.deckCards)
 
-      // ***TODO: Remove after debugging***
+      // // ***TODO: Remove after debugging***
       // this.debug = true;
       // if (this.debug && this.playerCards.length === 0) {
       //   dealtCard = test;
