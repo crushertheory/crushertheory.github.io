@@ -278,7 +278,13 @@ export class CardsComponent {
     while (this.deckCards.length < 52) {
       this.deckCards.push(deck[this.getCardNumber()]);
       this.deckCards = Array.from(new Set(this.deckCards));
+      this.deckCards.find((x) => {
+        if (x.value === 1) {
+          x.value = 11
+        }
+      })
     }
+    this.deckCards.find((x) => x.value === 1)
     return this.deckCards;
   }
 }

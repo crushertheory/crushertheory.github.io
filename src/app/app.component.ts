@@ -38,7 +38,7 @@ export class AppComponent {
   public playerRoundPoints: number = 0;
   public playerAceCount: number = 0;
   public computerAceCount: number = 0;
-  public dealingToPlayer: boolean = false
+  public dealingToPlayer: boolean = false;
 
   public currentVideo: string | undefined;
   public debug!: boolean | false;
@@ -64,9 +64,9 @@ export class AppComponent {
 
   ngOnInit() {
     this.cardsComponent.createDeck();
-    this.dealingToPlayer = true
+    this.dealingToPlayer = true;
     this.dealCards(this.playerCards);
-    this.dealingToPlayer = false
+    this.dealingToPlayer = false;
     this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
@@ -75,17 +75,27 @@ export class AppComponent {
   }
 
   public async dealCards(hand: any[]) {
-    let points: number = 0
+    let points: number = 0;
     while (hand.length < 2) {
       // Get first card from shuffled deck
-      const dealtCard = this.cardsComponent.deckCards[0];
+      let dealtCard = this.cardsComponent.deckCards[0];
 
       // Add dealt card to player's hand
+      // label: 'Asp',
+
+      const test = this.cardsComponent.deckCards.find((x) => x.label === 'Asp');
+      const test2 = this.cardsComponent.deckCards.find(
+        (x) => x.label === 'Ksp'
+      );
+      console.log(this.cardsComponent.deckCards)
 
       // ***TODO: Remove after debugging***
-      // this.debug = true
-      // if (this.debug && this.dealingToPlayer && hand.length === 0) {
-      //   dealtCard.value = 11
+      // this.debug = true;
+      // if (this.debug && this.playerCards.length === 0) {
+      //   dealtCard = test;
+      // }
+      // if (this.debug && this.playerCards.length === 1) {
+      //   dealtCard = test2;
       // }
       hand.push(dealtCard);
 
@@ -94,20 +104,20 @@ export class AppComponent {
 
       // Add dealt card value to player's points
       points = points + dealtCard.value;
-
-      if (this.dealingToPlayer) {
-        this.checkForAces(this.playerPoints, this.playerCards)
-      } else {
-        this.checkForAces(this.computerPoints, this.computerCards)
-      }
     }
 
-    this.checkForPlayerBlackjack(points)
+    this.checkForPlayerBlackjack(points);
 
     if (this.dealingToPlayer && !this.blackJack) {
       this.playerPoints = this.playerPoints + points;
+    } else if (!this.dealingToPlayer) {
+      this.computerPoints = this.computerPoints + points;
+    }
+
+    if (this.dealingToPlayer) {
+      this.checkForAces(this.playerPoints, this.playerCards);
     } else {
-      this.computerPoints = this.computerPoints + points
+      this.checkForAces(this.computerPoints, this.computerCards);
     }
   }
 
@@ -115,13 +125,13 @@ export class AppComponent {
     if (points === 21 && this.dealingToPlayer) {
       this.blackJack = true;
       this.playerPoints = this.playerPoints + points;
-      this.playerStays()
-      return
+      this.playerStays();
+      return;
     }
   }
 
   public hitMe() {
-    this.dealingToPlayer = true
+    this.dealingToPlayer = true;
     const dealtCard = this.cardsComponent.deckCards[0];
     this.removeCardsFromDeck();
 
@@ -129,7 +139,7 @@ export class AppComponent {
 
     this.playerCards.push(dealtCard);
 
-    this.checkForAces(this.playerPoints, this.playerCards)
+    this.checkForAces(this.playerPoints, this.playerCards);
 
     if (this.playerPoints === 21) {
       this.blackJack = true;
@@ -140,27 +150,27 @@ export class AppComponent {
       this.busted = true;
       this.playerStays();
     }
-    this.dealingToPlayer = false
+    this.dealingToPlayer = false;
   }
 
   public checkForAces(points: number, hand: any[]) {
     while (points > 21) {
       const ace = hand.find((card) => {
         if (card.value === 11) {
-          return card
+          return card;
         }
-        return undefined
+        return undefined;
       });
       if (ace) {
         ace.value = 1;
         points = points - 10;
         if (this.dealingToPlayer) {
-          this.playerPoints = points
+          this.playerPoints = points;
         } else {
-          this.computerPoints = points
+          this.computerPoints = points;
         }
       } else {
-        break
+        break;
       }
     }
   }
@@ -173,7 +183,7 @@ export class AppComponent {
       this.computerCards.push(receivedCard);
       this.removeCardsFromDeck();
 
-      this.checkForAces(this.computerPoints, this.computerCards)
+      this.checkForAces(this.computerPoints, this.computerCards);
       this.computerPoints = receivedCard.value + this.computerPoints;
     }
     this.computeWinner(
@@ -274,7 +284,7 @@ export class AppComponent {
   }
 
   public doubleDown() {
-    this.dealingToPlayer = true
+    this.dealingToPlayer = true;
     this.doubleDownActivated = true;
     const receivedCard = this.cardsComponent.deckCards[0];
     this.playerCards.push(receivedCard);
@@ -282,11 +292,11 @@ export class AppComponent {
     this.playerPoints = this.playerPoints + receivedCard.value;
     this.playerCredits = this.playerCredits - this.standardBet;
     this.bettingPool = this.bettingPool + this.standardBet;
-    this.checkForAces(this.playerPoints, this.playerCards)
+    this.checkForAces(this.playerPoints, this.playerCards);
     if (this.playerPoints === 21) {
-      this.blackJack = true
+      this.blackJack = true;
     }
-    this.dealingToPlayer = false
+    this.dealingToPlayer = false;
     this.playerStays();
   }
 
@@ -306,9 +316,9 @@ export class AppComponent {
     this.busted = false;
     this.blackJack = false;
     this.bettingPool = 0;
-    this.dealingToPlayer = true
+    this.dealingToPlayer = true;
     this.dealCards(this.playerCards);
-    this.dealingToPlayer = false
+    this.dealingToPlayer = false;
     this.dealCards(this.computerCards);
     this.playerCredits = this.playerCredits - this.standardBet;
     this.computerCredits = this.computerCredits - this.standardBet;
@@ -318,7 +328,7 @@ export class AppComponent {
     this.computerAceCount = 0;
     this.doubleDownActivated = false;
 
-    if (this.cardsComponent.deckCards.length < 5) {
+    if (this.cardsComponent.deckCards.length < 7) {
       this.cardsComponent.deckCards = [];
       this.cardsComponent.createDeck();
     }
