@@ -1,106 +1,116 @@
 <div class="something">
-  <div class="opponent-screen" *ngIf="opponentSelect === false">
-    <ng-container>
-      <div
-        style="display: inline-block"
-        *ngFor="let opponentImage of opponentImages; let i = index"
-      >
-        <img
-          class="opponent-image"
-          src="{{ opponentImage }}"
-          alt=""
-          (click)="opponent = i + 1; opponentSelected(opponent)"
-        />
-        <span style="padding: 5px"></span>
-      </div>
-    </ng-container>
+  <div class="center-screen">
+    <div class="opponent-screen" *ngIf="opponentSelect === false">
+      <ng-container>
+        <div
+          style="display: inline-block; padding-top: 10px"
+          *ngFor="let opponentImage of opponentImages; let i = index"
+        >
+          <img
+            class="opponent-image"
+            src="{{ opponentImage }}"
+            alt=""
+            (click)="opponent = i + 1; opponentSelected(opponent)"
+          />
+          <span style="padding: 5px"></span>
+        </div>
+      </ng-container>
+    </div>
   </div>
   <div class="upper-frame" *ngIf="opponentSelect === true">
     <div *ngIf="videoTime">
       <div class="center-screen">
-        <video
-          class="new-video center-screen"
-          [muted]="true"
-          autoplay
-          src="{{ currentVideo }}"
-          type="video/mp4"
-        ></video>
+        <!-- <div class="video-mask"> -->
+          <video
+            class="new-video center-screen"
+            [muted]="true"
+            autoplay
+            src="{{ currentVideo }}"
+            type="video/mp4"
+          ></video>
+        <!-- </div> -->
       </div>
     </div>
   </div>
-  <div class="board" *ngIf="opponentSelect === true">
-    <div>
-      <span style="padding: 5px"></span>
+  <div style="padding-left: 5px">
+    <div class="board" *ngIf="opponentSelect === true">
       <div>
-        Player
-        <round-progress [roundPoints]="playerRoundPoints"></round-progress>
+        <span style="padding: 5px"></span>
+        <div>
+          Player
+          <round-progress [roundPoints]="playerRoundPoints"></round-progress>
+        </div>
       </div>
-    </div>
 
-    <div
-      style="display: inline-block; padding: 2px"
-      *ngFor="let card of playerCards"
-    >
-      <img class="card" src="{{ card.image }}" alt="" />
-    </div>
-    <div>{{ playerPoints }}</div>
-    <span style="padding: 5px"></span>
-    <div style="display: inline-block">
-      <button
-        class="button-2"
-        [disabled]="playerStayed === true || playerPoints > 21"
-        (click)="hitMe()"
+      <div
+        style="display: inline-block; padding: 2px"
+        *ngFor="let card of playerCards"
       >
-        Hit Me
-      </button>
+        <img class="card" src="{{ card.image }}" alt="" />
+      </div>
+      <div>{{ playerPoints }}</div>
       <span style="padding: 5px"></span>
-      <button
-        class="button-2"
-        [disabled]="playerStayed === true"
-        (click)="playerStays()"
+      <div style="display: inline-block">
+        <button
+          class="button-2"
+          [disabled]="playerStayed === true || playerPoints > 21"
+          (click)="hitMe()"
+        >
+          Hit Me
+        </button>
+        <span style="padding: 5px"></span>
+        <button
+          class="button-2"
+          [disabled]="playerStayed === true"
+          (click)="playerStays()"
+        >
+          Stay
+        </button>
+        <span style="padding: 5px"></span>
+        <button
+          [disabled]="playerCards.length !== 2 || playerStayed"
+          (click)="doubleDown()"
+          class="button-2"
+        >
+          Double Down
+        </button>
+        <span style="padding: 5px"></span>
+        <button
+          class="button-2"
+          [disabled]="!playerStayed"
+          (click)="nextHand()"
+        >
+          Next Hand
+        </button>
+      </div>
+      <span style="padding: 5px">
+        <div>Computer</div>
+      </span>
+      <div
+        style="display: inline-block; padding: 2px"
+        *ngFor="let card of computerCards; let i = index"
       >
-        Stay
-      </button>
-      <span style="padding: 5px"></span>
-      <button
-        [disabled]="playerCards.length !== 2 || playerStayed"
-        (click)="doubleDown()"
-        class="button-2"
-      >
-        Double Down
-      </button>
-      <span style="padding: 5px"></span>
-      <button class="button-2" [disabled]="!playerStayed" (click)="nextHand()">
-        Next Hand
-      </button>
+        <img
+          *ngIf="i === 0 && hideInitialCard"
+          class="card"
+          src="../assets/cards/cardBack.png"
+          alt=""
+        />
+        <img
+          *ngIf="i === 0 && !hideInitialCard"
+          class="card"
+          src="{{ computerCards[0].image }}"
+          alt=""
+        />
+        <img *ngIf="i !== 0" class="card" src="{{ card.image }}" alt="" />
+      </div>
+      <div *ngIf="!hideInitialCard">{{ computerPoints }}</div>
+      <h3 *ngIf="blackJack">BLACKJACK!!!!</h3>
+      <h3 *ngIf="busted">BUSTED :(</h3>
+      <h3 *ngIf="playerWins">You win :)</h3>
+      <h3 *ngIf="computerWins">You lose :(</h3>
+      <h3 *ngIf="draw">DRAW</h3>
+      <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
     </div>
-    <span style="padding: 5px">
-      <div>Computer</div>
-    </span>
-    <div
-      style="display: inline-block; padding: 2px"
-      *ngFor="let card of computerCards; let i = index"
-    >
-      <img
-        *ngIf="i === 0 && hideInitialCard"
-        class="card"
-        src="../assets/cards/cardBack.png"
-        alt=""
-      />
-      <img
-        *ngIf="i === 0 && !hideInitialCard"
-        class="card"
-        src="{{ computerCards[0].image }}"
-        alt=""
-      />
-      <img *ngIf="i !== 0" class="card" src="{{ card.image }}" alt="" />
-    </div>
-    <div *ngIf="!hideInitialCard">{{ computerPoints }}</div>
-    <h3 *ngIf="blackJack">BLACKJACK!!!!</h3>
-    <h3 *ngIf="busted">BUSTED :(</h3>
-    <h3 *ngIf="playerWins">You win :)</h3>
-    <h3 *ngIf="computerWins">You lose :(</h3>
-    <h3 *ngIf="draw">DRAW</h3>
-    <!-- <h2>Pot: {{ bettingPool }}g</h2> -->
   </div>
 </div>

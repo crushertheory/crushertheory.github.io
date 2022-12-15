@@ -87,7 +87,6 @@ export class AppComponent {
       const test2 = this.cardsComponent.deckCards.find(
         (x) => x.label === 'Ksp'
       );
-      console.log(this.cardsComponent.deckCards)
 
       // // ***TODO: Remove after debugging***
       // this.debug = true;
