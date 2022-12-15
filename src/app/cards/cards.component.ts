@@ -274,22 +274,21 @@ export class CardsComponent {
   }
 
   public resetAces() {
-
-    for (const card of this.deckCards) {
-      const aceToBeReset = this.deckCards.find((card) => card.value === 1)
+    for (const card of this.allCards) {
+      const aceToBeReset = this.allCards.find((card) => card.value === 1)
       if (aceToBeReset) {
-        aceToBeReset.aceToBeReset.value = 11
+        aceToBeReset.value = 11
       }
     }
   }
 
   public createDeck() {
+    this.resetAces()
     const deck = this.allCards
     while (this.deckCards.length < 52) {
       this.deckCards.push(deck[this.getCardNumber()]);
       this.deckCards = Array.from(new Set(this.deckCards));
     }
-    this.resetAces()
     return this.deckCards;
   }
 }
