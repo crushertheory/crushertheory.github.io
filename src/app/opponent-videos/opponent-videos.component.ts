@@ -239,5 +239,4 @@ export class OpponentVideosComponent {
     this.videos14,
     this.videos15
   ]
-
 }

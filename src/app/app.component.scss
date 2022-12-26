@@ -13,17 +13,6 @@ body {
   height: 50px;
   border: none;
   background-color: rgb(128, 210, 210);
-  //   padding: 10px;
-}
-
-// .upper-frame {
-//   height: 65%;
-//   background-color: black;
-//   padding: 20px;
-// }
-
-.lower-frame {
-  //   height: 35%;
 }
 
 .test {
@@ -41,12 +30,6 @@ body {
   position: fixed;
   left: 50%;
 }
-
-// .video-mask{
-//   border-radius: 22px;
-//   overflow: hidden;
-//   -webkit-transform: translateZ(0);
-// }
 
 .new-video {
   position: static;
@@ -104,18 +87,7 @@ body {
   justify-content: center;
   align-items: center;
   text-align: center;
-  //   min-height: 100vh;
 }
-
-// .body {
-//   display: flex;
-//   height: 100%;
-//   width: 100%;
-//   justify-content: center;
-//   overflow: hidden;
-//   color: black;
-//   background-color: antiquewhite;
-// }
 
 app-main {
   display: flex;

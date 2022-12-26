@@ -14,7 +14,6 @@ export class AppComponent {
   ) {}
   opponentSelect: boolean = false;
   title = 'black-jack';
-  // deckCards: any[] = [];
   playerCards: any[] = [];
   computerCards: any[] = [];
   public playerPoints: number = 0;
@@ -27,11 +26,7 @@ export class AppComponent {
   public hideInitialCard: boolean = true;
   public draw: boolean = false;
   public playerStayed: boolean = false;
-  playerCredits: number = 100;
-  computerCredits: number = 100;
-  public bettingPool: number = 0;
   public doubleDownActivated: boolean = false;
-  public standardBet: number = 20;
   public playerWinCount: number = 0;
   public videoTime: boolean = false;
   public opponent: number = 0;
@@ -42,8 +37,6 @@ export class AppComponent {
 
   public currentVideo: string | undefined;
   public debug!: boolean | false;
-
-  // public deck = this.cardsComponent.deckCards
 
   public opponentImages = [
     '../assets/opponents/opponent1.png',
@@ -69,9 +62,6 @@ export class AppComponent {
     this.dealCards(this.playerCards);
     this.dealingToPlayer = false;
     this.dealCards(this.computerCards);
-    this.playerCredits = this.playerCredits - this.standardBet;
-    this.computerCredits = this.computerCredits - this.standardBet;
-    this.bettingPool = this.bettingPool + this.standardBet + this.standardBet;
     this.videoTime = true;
   }
 
@@ -84,10 +74,10 @@ export class AppComponent {
       // Add dealt card to player's hand
       // label: 'Asp',
 
-      const test = this.cardsComponent.deckCards.find((x) => x.label === 'Asp');
-      const test2 = this.cardsComponent.deckCards.find(
-        (x) => x.label === 'Ksp'
-      );
+      // const test = this.cardsComponent.deckCards.find((x) => x.label === 'Asp');
+      // const test2 = this.cardsComponent.deckCards.find(
+      //   (x) => x.label === 'Ksp'
+      // );
 
       // // ***TODO: Remove after debugging***
       // this.debug = true;
@@ -114,9 +104,9 @@ export class AppComponent {
       this.computerPoints = this.computerPoints + points;
     }
 
-    if (this.dealingToPlayer) {
+    if (this.dealingToPlayer && !this.blackJack) {
       this.checkForAces(this.playerPoints, this.playerCards);
-    } else {
+    } else if (!this.dealingToPlayer) {
       this.checkForAces(this.computerPoints, this.computerCards);
     }
   }
@@ -126,7 +116,6 @@ export class AppComponent {
       this.blackJack = true;
       this.playerPoints = this.playerPoints + points;
       this.playerStays();
-      return;
     }
   }
 
@@ -189,16 +178,14 @@ export class AppComponent {
     this.computeWinner(
       this.computerPoints,
       this.playerPoints,
-      this.bettingPool
     );
+    return this.playerStayed = true
   }
 
   public computeWinner(
     computerScore: number,
     playerScore: number,
-    pool: number
   ): number {
-    const halfPool = pool / 2;
     if (computerScore < 22 && playerScore < 22) {
       if (computerScore > playerScore) {
         this.computerWins = true;
@@ -207,7 +194,6 @@ export class AppComponent {
         if (this.doubleDownActivated && this.playerRoundPoints > 0) {
           this.playerRoundPoints = this.playerRoundPoints - 1;
         }
-        return (this.computerCredits = this.computerCredits + pool);
       }
       if (computerScore < playerScore) {
         this.playerWins = true;
@@ -227,15 +213,9 @@ export class AppComponent {
         }
 
         this.displayVideo();
-
-        return (this.playerCredits = this.playerCredits + pool);
       }
       if (computerScore === playerScore) {
         this.draw = true;
-        return (
-          (this.playerCredits = this.playerCredits + halfPool),
-          (this.computerCredits = this.computerCredits + halfPool)
-        );
       }
     } else {
       if (playerScore < 22 && computerScore >= 22) {
@@ -257,8 +237,6 @@ export class AppComponent {
         }
 
         this.displayVideo();
-
-        return (this.playerCredits = this.playerCredits + pool);
       }
       if (playerScore >= 22 && computerScore < 22) {
         this.computerWins = true;
@@ -266,7 +244,6 @@ export class AppComponent {
         if (this.doubleDownActivated && this.playerRoundPoints > 0) {
           this.playerRoundPoints = this.playerRoundPoints - 1;
         }
-        return (this.computerCredits = this.computerCredits + pool);
       }
       if (
         playerScore >= 22 &&
@@ -274,10 +251,6 @@ export class AppComponent {
         playerScore === computerScore
       ) {
         this.draw = true;
-        return (
-          (this.playerCredits = this.playerCredits + halfPool),
-          (this.computerCredits = this.computerCredits + halfPool)
-        );
       }
     }
     return 0;
@@ -290,8 +263,6 @@ export class AppComponent {
     this.playerCards.push(receivedCard);
     this.removeCardsFromDeck();
     this.playerPoints = this.playerPoints + receivedCard.value;
-    this.playerCredits = this.playerCredits - this.standardBet;
-    this.bettingPool = this.bettingPool + this.standardBet;
     this.checkForAces(this.playerPoints, this.playerCards);
     if (this.playerPoints === 21) {
       this.blackJack = true;
@@ -315,18 +286,14 @@ export class AppComponent {
     this.hideInitialCard = true;
     this.busted = false;
     this.blackJack = false;
-    this.bettingPool = 0;
     this.dealingToPlayer = true;
-    this.dealCards(this.playerCards);
-    this.dealingToPlayer = false;
-    this.dealCards(this.computerCards);
-    this.playerCredits = this.playerCredits - this.standardBet;
-    this.computerCredits = this.computerCredits - this.standardBet;
-    this.bettingPool = this.bettingPool + this.standardBet * 2;
     this.playerStayed = false;
     this.playerAceCount = 0;
     this.computerAceCount = 0;
     this.doubleDownActivated = false;
+    this.dealCards(this.playerCards);
+    this.dealingToPlayer = false;
+    this.dealCards(this.computerCards);
 
     if (this.cardsComponent.deckCards.length < 7) {
       this.cardsComponent.deckCards = [];
