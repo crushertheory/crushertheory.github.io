@@ -34,6 +34,11 @@ export class AppComponent {
   public playerAceCount: number = 0;
   public computerAceCount: number = 0;
   public dealingToPlayer: boolean = false;
+  public allOpponentVideos = this.opponentVideos.videosArray;
+
+  // Tallies of total wins and blackjacks for player and computer
+  public totalPlayerBlackJacks: number = 0;
+  public totalComputerBlackJacks: number = 0;
 
   public currentVideo: string | undefined;
   public debug!: boolean | false;
@@ -54,6 +59,7 @@ export class AppComponent {
     '../assets/opponents/opponent13.png',
     '../assets/opponents/opponent14.png',
     '../assets/opponents/opponent15.png',
+    '../assets/opponents/opponent16.png',
   ];
 
   ngOnInit() {
@@ -115,6 +121,7 @@ export class AppComponent {
     if (points === 21 && this.dealingToPlayer) {
       this.blackJack = true;
       this.playerPoints = this.playerPoints + points;
+      this.totalPlayerBlackJacks++;
       this.playerStays();
     }
   }
@@ -132,6 +139,7 @@ export class AppComponent {
 
     if (this.playerPoints === 21) {
       this.blackJack = true;
+      this.totalPlayerBlackJacks++;
       this.playerStays();
     }
 
@@ -175,20 +183,18 @@ export class AppComponent {
       this.checkForAces(this.computerPoints, this.computerCards);
       this.computerPoints = receivedCard.value + this.computerPoints;
     }
-    this.computeWinner(
-      this.computerPoints,
-      this.playerPoints,
-    );
-    return this.playerStayed = true
+    this.computeWinner(this.computerPoints, this.playerPoints);
+    return (this.playerStayed = true);
   }
 
-  public computeWinner(
-    computerScore: number,
-    playerScore: number,
-  ): number {
+  public computeWinner(computerScore: number, playerScore: number): number {
     if (computerScore < 22 && playerScore < 22) {
       if (computerScore > playerScore) {
         this.computerWins = true;
+
+        if (computerScore === 21 && !this.blackJack) {
+          this.totalComputerBlackJacks++;
+        }
 
         // Remove a point if the player doubled down and lost the hand - GAMBLING!
         if (this.doubleDownActivated && this.playerRoundPoints > 0) {
@@ -266,6 +272,7 @@ export class AppComponent {
     this.checkForAces(this.playerPoints, this.playerCards);
     if (this.playerPoints === 21) {
       this.blackJack = true;
+      this.totalPlayerBlackJacks++;
     }
     this.dealingToPlayer = false;
     this.playerStays();
@@ -302,53 +309,7 @@ export class AppComponent {
   }
 
   public selectOpponentVideos(opponent: number) {
-    let opponentVideoArray: any;
-    if (opponent === 1) {
-      opponentVideoArray = this.opponentVideos.videos1;
-    }
-    if (opponent === 2) {
-      opponentVideoArray = this.opponentVideos.videos2;
-    }
-    if (opponent === 3) {
-      opponentVideoArray = this.opponentVideos.videos3;
-    }
-    if (opponent === 4) {
-      opponentVideoArray = this.opponentVideos.videos4;
-    }
-    if (opponent === 5) {
-      opponentVideoArray = this.opponentVideos.videos5;
-    }
-    if (opponent === 6) {
-      opponentVideoArray = this.opponentVideos.videos6;
-    }
-    if (opponent === 7) {
-      opponentVideoArray = this.opponentVideos.videos7;
-    }
-    if (opponent === 8) {
-      opponentVideoArray = this.opponentVideos.videos8;
-    }
-    if (opponent === 9) {
-      opponentVideoArray = this.opponentVideos.videos9;
-    }
-    if (opponent === 10) {
-      opponentVideoArray = this.opponentVideos.videos10;
-    }
-    if (opponent === 11) {
-      opponentVideoArray = this.opponentVideos.videos11;
-    }
-    if (opponent === 12) {
-      opponentVideoArray = this.opponentVideos.videos12;
-    }
-    if (opponent === 13) {
-      opponentVideoArray = this.opponentVideos.videos13;
-    }
-    if (opponent === 14) {
-      opponentVideoArray = this.opponentVideos.videos14;
-    }
-    if (opponent === 15) {
-      opponentVideoArray = this.opponentVideos.videos15;
-    }
-    return opponentVideoArray;
+    return this.opponentVideos.videosArray[opponent - 1];
   }
 
   public displayVideo() {

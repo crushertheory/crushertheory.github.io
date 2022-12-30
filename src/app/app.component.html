@@ -20,15 +20,13 @@
   <div class="upper-frame" *ngIf="opponentSelect === true">
     <div *ngIf="videoTime">
       <div class="center-screen">
-        <!-- <div class="video-mask"> -->
-          <video
+        <video
             class="new-video center-screen"
             [muted]="true"
             autoplay
             src="{{ currentVideo }}"
             type="video/mp4"
           ></video>
-        <!-- </div> -->
       </div>
     </div>
   </div>
@@ -39,6 +37,7 @@
         <div>
           Player
           <round-progress [roundPoints]="playerRoundPoints"></round-progress>
+          <!-- <mat-icon fontIcon="info"></mat-icon> -->
         </div>
       </div>
 
