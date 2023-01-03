@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { CardsComponent } from './cards/cards.component';
 import { OpponentVideosComponent } from './opponent-videos/opponent-videos.component';
+import { ResetDialogComponent } from './reset-dialog/reset-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,8 @@ import { OpponentVideosComponent } from './opponent-videos/opponent-videos.compo
 export class AppComponent {
   constructor(
     public cardsComponent: CardsComponent,
-    public opponentVideos: OpponentVideosComponent
+    public opponentVideos: OpponentVideosComponent,
+    public dialog: MatDialog
   ) {}
   opponentSelect: boolean = false;
   title = 'black-jack';
@@ -313,58 +316,19 @@ export class AppComponent {
   }
 
   public displayVideo() {
+    this.debug = true
     const opponentVideos: any = this.selectOpponentVideos(this.opponent);
-    if (this.playerWinCount === 5) {
+    const wins = 5;
+    const index = 1;
+    if (this.playerWinCount === wins) {
+      wins + 5;
       this.videoTime = true;
-      return (this.currentVideo = opponentVideos[1]);
-    }
-    if (this.playerWinCount === 10) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[2]);
-    }
-    if (this.playerWinCount === 15) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[3]);
-    }
-    if (this.playerWinCount === 20) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[4]);
-    }
-    if (this.playerWinCount === 25) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[5]);
-    }
-    if (this.playerWinCount === 30) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[6]);
-    }
-    if (this.playerWinCount === 35) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[7]);
-    }
-    if (this.playerWinCount === 40) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[8]);
-    }
-    if (this.playerWinCount === 45) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[9]);
-    }
-    if (this.playerWinCount === 50) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[10]);
-    }
-    if (this.playerWinCount === 55) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[11]);
-    }
-    if (this.playerWinCount === 60) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[12]);
-    }
-    if (this.playerWinCount === 65) {
-      this.videoTime = true;
-      return (this.currentVideo = opponentVideos[13]);
+      if (!opponentVideos[index]) {
+        this.dialog.open(ResetDialogComponent)
+      } else {
+        this.currentVideo = opponentVideos[index];
+        index + 1;
+      }
     }
   }
 
