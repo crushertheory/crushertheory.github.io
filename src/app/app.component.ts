@@ -38,6 +38,8 @@ export class AppComponent {
   public computerAceCount: number = 0;
   public dealingToPlayer: boolean = false;
   public allOpponentVideos = this.opponentVideos.videosArray;
+  public roundsToVideo: number = 5
+  public videoIndex: number = 1
 
   // Tallies of total wins and blackjacks for player and computer
   public totalPlayerBlackJacks: number = 0;
@@ -316,18 +318,15 @@ export class AppComponent {
   }
 
   public displayVideo() {
-    this.debug = true
     const opponentVideos: any = this.selectOpponentVideos(this.opponent);
-    const wins = 5;
-    const index = 1;
-    if (this.playerWinCount === wins) {
-      wins + 5;
+    if (this.playerWinCount === this.roundsToVideo) {
+      this.roundsToVideo = this.roundsToVideo + 5
       this.videoTime = true;
-      if (!opponentVideos[index]) {
-        this.dialog.open(ResetDialogComponent)
+      if (!opponentVideos[this.videoIndex]) {
+        this.dialog.open(ResetDialogComponent);
       } else {
-        this.currentVideo = opponentVideos[index];
-        index + 1;
+        this.currentVideo = opponentVideos[this.videoIndex];
+        this.videoIndex = this.videoIndex + 1;
       }
     }
   }
