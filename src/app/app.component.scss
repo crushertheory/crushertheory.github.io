@@ -69,6 +69,7 @@ body {
 .opponent-screen {
   height: 100vh;
   background-color: #0f172a;
+  background-image: linear-gradient(#250f2a, #0f172a);
 }
 
 .oppenent-image-padding {
@@ -123,6 +124,7 @@ app-main {
 
 .something {
   background-color: #0f172a;
+  background-image: linear-gradient(#250f2a, #0f172a);
   color: white;
   height: 100vh;
 }
