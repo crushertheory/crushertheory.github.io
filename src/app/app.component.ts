@@ -334,6 +334,16 @@ export class AppComponent {
           .getElementById('video')
           ?.addEventListener('ended', openDialog, false);
       }
+      // *** For debugging dialog box after a single video change
+      // this.debug = true
+      // if (this.debug) {
+      //   const openDialog = () => {
+      //     this.dialog.open(ResetDialogComponent);
+      //   };
+      //   document
+      //     .getElementById('video')
+      //     ?.addEventListener('ended', openDialog, false);
+      // }
     }
   }
 
