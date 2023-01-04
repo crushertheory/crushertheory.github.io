@@ -21,13 +21,13 @@
     <div *ngIf="videoTime">
       <div class="center-screen">
         <video
-            class="new-video center-screen"
-            [muted]="true"
-            autoplay
-            src="{{ currentVideo }}"
-            type="video/mp4"
-            id="video"
-          ></video>
+          class="new-video center-screen"
+          [muted]="true"
+          autoplay
+          src="{{ currentVideo }}"
+          type="video/mp4"
+          id="video"
+        ></video>
       </div>
     </div>
   </div>
@@ -35,7 +35,7 @@
     <div class="board" *ngIf="opponentSelect === true">
       <div>
         <span style="padding: 5px"></span>
-        <div>
+        <div class="game-text">
           Player
           <round-progress [roundPoints]="playerRoundPoints"></round-progress>
           <!-- <mat-icon fontIcon="info"></mat-icon> -->
@@ -46,11 +46,13 @@
         style="display: inline-block; padding: 2px"
         *ngFor="let card of playerCards"
       >
-        <img class="card" src="{{ card.image }}" alt="" />
+        <div class="player-cards-container">
+          <img class="card" src="{{ card.image }}" alt="" />
+        </div>
       </div>
       <div>{{ playerPoints }}</div>
       <span style="padding: 5px"></span>
-      <div style="display: inline-block">
+      <div class="buttons-container">
         <button
           class="button-2"
           [disabled]="playerStayed === true || playerPoints > 21"
@@ -84,7 +86,7 @@
         </button>
       </div>
       <span style="padding: 5px">
-        <div>Computer</div>
+        <div class="game-text">Computer</div>
       </span>
       <div
         style="display: inline-block; padding: 2px"
@@ -104,12 +106,16 @@
         />
         <img *ngIf="i !== 0" class="card" src="{{ card.image }}" alt="" />
       </div>
-      <div *ngIf="!hideInitialCard">{{ computerPoints }}</div>
-      <h3 *ngIf="blackJack && computerPoints !== 21">BLACKJACK!!!!</h3>
-      <h3 *ngIf="busted">BUSTED :(</h3>
-      <h3 *ngIf="playerWins">You win :)</h3>
-      <h3 *ngIf="computerWins">You lose :(</h3>
-      <h3 *ngIf="draw">DRAW</h3>
+      <div class="game-text" *ngIf="!hideInitialCard">{{ computerPoints }}</div>
+      <h3 class="game-text" *ngIf="blackJack && computerPoints !== 21">
+        You Win - BLACKJACK!!!
+      </h3>
+      <h3 class="game-text" *ngIf="busted">You Lose - Busted</h3>
+      <h4 class="game-text" *ngIf="playerWins && !blackJack">You win!</h4>
+      <h3 class="game-text" *ngIf="computerWins && playerPoints < 22">
+        You lose
+      </h3>
+      <h3 class="game-text" *ngIf="draw">DRAW</h3>
     </div>
   </div>
 </div>
